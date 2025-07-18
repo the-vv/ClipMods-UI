@@ -2,5 +2,19 @@
 @use './tailwind';
 
 :root {
-    font-size: 14px;
+  font-size: 14px;
+}
+
+body {
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+router-outlet {
+  &+* {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 }
