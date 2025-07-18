@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --o --hmr",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -26,7 +26,13 @@
     "@angular/forms": "^20.1.0",
     "@angular/platform-browser": "^20.1.0",
     "@angular/router": "^20.1.0",
+    "@primeuix/themes": "^1.2.1",
+    "@tailwindcss/postcss": "^4.1.11",
+    "postcss": "^8.5.6",
+    "primeng": "^20.0.0",
     "rxjs": "~7.8.0",
+    "tailwindcss": "^4.1.11",
+    "tailwindcss-primeui": "^0.6.1",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
