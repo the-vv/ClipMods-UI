@@ -1,0 +1,21 @@
+.toastify.success-toast-clipMods {
+  color: black !important;
+  background: white !important;
+  border-radius: 6px;
+
+  .toast-close {
+    color: black !important;
+    margin-left: 12px;
+  }
+}
+
+.error-toast-clipMods {
+  color: white !important;
+  background: rgba(255, 0, 0, 0.463) !important;
+  border-radius: 6px;
+
+  .toast-close {
+    color: white !important;
+    margin-left: 12px;
+  }
+}
