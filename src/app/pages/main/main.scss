@@ -4,4 +4,25 @@
 
 :host {
   --p-fieldset-legend-background: transparent;
+
+  ::ng-deep {
+    .p-fieldset {
+      display: flex;
+      flex-direction: column;
+
+      .p-fieldset-content-container {
+        flex-grow: 1;
+
+        .p-fieldset-content {
+          height: 100%;
+          // overflow: auto;
+        }
+      }
+    }
+
+    .editor-container {
+      border-radius: 12px;
+      overflow: clip;
+    }
+  }
 }

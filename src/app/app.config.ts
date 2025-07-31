@@ -1,10 +1,12 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import { clipModsPreset } from './clipMods.theme';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
+import { setMonacoTheme } from './editor-theme';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,6 +24,13 @@ export const appConfig: ApplicationConfig = {
           }
         }
       }
-    })
+    }),
+    importProvidersFrom(MonacoEditorModule.forRoot({
+      baseUrl: `${window.location.origin}/public/monaco/min/vs`,
+      onMonacoLoad: () => {
+        setMonacoTheme();
+      },
+
+    }))
   ]
 };

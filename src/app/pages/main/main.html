@@ -3,13 +3,19 @@
     <div class=" rounded-2xl w-full">
       <p-fieldset legend="Options" styleClass="main-bg-color -mt-5 rounded-2xl" class="h-full">
         @defer {
-          <app-paste-options class="block w-full" />
+        <app-paste-options class="block w-full" />
         }
       </p-fieldset>
     </div>
     <div class="rounded-2xl w-full grow">
-      <p-fieldset legend="Content" styleClass="main-bg-color -mt-5 rounded-2xl h-full" class="h-full block">
-        content here
+      <p-fieldset legend="Content" styleClass="main-bg-color -mt-5 rounded-2xl h-full w-full min-w-0"
+        class="h-full block">
+        <div class="size-full">
+          <ngx-monaco-editor [options]="editorOptions" class="w-full h-full min-w-0 rounded-2xl overflow-clip"
+            style="height: 100%; width: 100%;"></ngx-monaco-editor>
+        </div>
+
+        <!-- <textarea rows="5" cols="30" pTextarea class="size-full" placeholder="Paste your content here"></textarea> -->
       </p-fieldset>
     </div>
   </div>
