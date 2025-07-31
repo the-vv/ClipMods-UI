@@ -1,0 +1,27 @@
+<p-toolbar>
+  <ng-template #start>
+    <div class="flex items-center gap-2">
+      <img src="/clipMods.png" alt="Logo" class="h-8 w-8" />
+      <span class="text-xl font-semibold ml-2 mr-4">
+        ClipMods
+      </span>
+      <!-- <p-button label="Files" text plain />
+      <p-button label="Edit" text plain />
+      <p-button label="View" text plain /> -->
+    </div>
+  </ng-template>
+
+  <ng-template #end>
+    <div class="flex items-center gap-2">
+      @if (isLoggedIn) {
+        <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+          [style]="{ width: '32px', height: '32px' }" />
+      } @else {
+        <p-button size="small" severity="secondary">
+          <span class="material-symbols-outlined">login</span>
+          Login
+        </p-button>
+      }
+  </div>
+    </ng-template>
+</p-toolbar>

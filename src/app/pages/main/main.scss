@@ -1,0 +1,7 @@
+.main-bg-color {
+  background-color: var(--p-content-background)
+}
+
+:host {
+  --p-fieldset-legend-background: transparent;
+}

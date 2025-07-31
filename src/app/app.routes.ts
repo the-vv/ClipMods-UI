@@ -8,6 +8,12 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./pages/main-layout/main-layout').then(m => m.MainLayout),
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./pages/main/main').then(m => m.Main),
+      }
+    ]
   },
   {
     path: '**',
