@@ -1,0 +1,9 @@
+:host {
+  --p-button-sm-font-size: 0.5rem;
+  --p-button-sm-padding-y: 0.2rem;
+  --p-button-sm-padding-x: 0.2rem;
+}
+
+.mod-card {
+  background-color: rgb(from var(--p-surface-950) r g b / 30%);
+}

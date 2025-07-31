@@ -1,0 +1,20 @@
+:host ::ng-deep {
+  .p-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    height: 100%;
+
+    .p-tabpanels {
+      flex-grow: 1;
+      min-height: 0;
+      padding: 0px;
+
+      .p-tabpanel-active {
+        height: 100%;
+        overflow: auto;
+        display: block;
+      }
+    }
+  }
+}
