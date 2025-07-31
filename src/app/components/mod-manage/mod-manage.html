@@ -1,0 +1,45 @@
+<div class="h-full flex flex-col gap-2">
+  <form [formGroup]="modForm" (ngSubmit)="onSubmit()" class="w-full flex flex-col gap-4">
+    <div class="field w-full">
+      <label for="name">Name</label>
+      <input id="name" type="text" pInputText formControlName="name"
+        placeholder="Enter mod name"  variant="filled"/>
+      @if (modForm.get('name')?.invalid && modForm.get('name')?.touched) {
+        <small class="err-msg">
+          Name is required.
+        </small>
+      }
+    </div>
+
+    <div class="field w-full">
+      <label for="description">Description</label>
+      <textarea id="description" pInputTextarea formControlName="description"
+        placeholder="Enter mod description" variant="filled"></textarea>
+      @if (modForm.get('description')?.invalid && modForm.get('description')?.touched) {
+        <small class="err-msg">
+          Description is required.
+        </small>
+      }
+    </div>
+
+    <div class="flex gap-4">
+      <div class="field w-full min-w-0">
+        <label for="tags">Tags</label>
+        <input pInputText id="tags" formControlName="tags"
+          placeholder="Enter tags (comma separated)"  variant="filled"/>
+        @if (modForm.get('tags')?.invalid && modForm.get('tags')?.touched) {
+          <small class="err-msg">
+            At least one tag is required.
+          </small>
+        }
+      </div>
+      <div class="option-card self-center mt-4 flex gap-4 items-center border border-primary/10 cursor-pointer shrink-0">
+        <label for="publicMod" class="cursor-pointer">Make This Mod Publicly Available</label>
+        <p-toggleswitch inputId="publicMod" formControlName="isPublic" />
+      </div>
+    </div>
+
+
+    <button pButton type="submit" label="Submit" [disabled]="modForm.invalid"></button>
+  </form>
+</div>

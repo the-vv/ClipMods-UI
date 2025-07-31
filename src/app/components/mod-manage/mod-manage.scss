@@ -1,0 +1,31 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.field-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.err-msg {
+  color: red;
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: -20px;
+}
+
+.option-card {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border-color: var(--p-surface-700);
+  @apply flex items-center;
+  width: max-content;
+  background-color: var(--p-surface-800);
+}

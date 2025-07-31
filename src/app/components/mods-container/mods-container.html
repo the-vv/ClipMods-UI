@@ -2,18 +2,14 @@
   <div class="w-full flex justify-between">
     <p-selectbutton [options]="stateOptions" [(ngModel)]="selectedTabIndex" optionLabel="label" optionValue="value"
       aria-labelledby="basic" [allowEmpty]="false" />
-    <p-button severity="primary" size="small" variant="outlined">
+    <p-button severity="primary" size="small" variant="outlined" (click)="openedCreateModDrawer.set(true)"
+      class="shrink-0">
       <span class="material-symbols-outlined">add</span>
       Create
     </p-button>
   </div>
-
+  <hr class="opacity-10">
   <p-tabs [(value)]="selectedTabIndex" class="block max-w-full grow">
-    <p-tablist scrollable class="hidden">
-      <p-tab [value]="0">Recent Mods</p-tab>
-      <p-tab [value]="1">My Mods</p-tab>
-      <p-tab [value]="2">Shared Mods</p-tab>
-    </p-tablist>
     <p-tabpanels class="m-0">
       <p-tabpanel [value]="0">
         <div class="h-full flex flex-col gap-2">
@@ -37,3 +33,11 @@
     </p-tabpanels>
   </p-tabs>
 </div>
+
+
+<p-drawer [(visible)]="openedCreateModDrawer" header="Create Mod" [style]="{ width: '50vw' }" [modal]="true"
+  [closeOnEscape]="true" [position]="'right'" [dismissible]="false">
+  @defer {
+    <app-mod-manage class="block h-full w-full"></app-mod-manage>
+  }
+</p-drawer>

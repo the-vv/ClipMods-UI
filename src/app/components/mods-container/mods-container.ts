@@ -6,15 +6,18 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { DrawerModule } from 'primeng/drawer';
+import { ModManage } from "../mod-manage/mod-manage";
 
 @Component({
   selector: 'app-mods-container',
-  imports: [TabsModule, ModCard, SelectButtonModule, FormsModule, ButtonModule, InputTextModule],
+  imports: [TabsModule, ModCard, SelectButtonModule, FormsModule, ButtonModule, InputTextModule, DrawerModule, ModManage],
   templateUrl: './mods-container.html',
   styleUrl: './mods-container.scss'
 })
 export class ModsContainer {
 
+  openedCreateModDrawer = model(false);
   stateOptions: any[] = [
     { label: 'Recent', value: 0 },
     { label: 'Mine', value: 1 },
