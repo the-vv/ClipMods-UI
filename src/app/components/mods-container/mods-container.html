@@ -1,7 +1,7 @@
 <div class="w-full flex flex-col gap-2 h-full">
   <div class="w-full flex justify-between">
     <p-selectbutton [options]="stateOptions" [(ngModel)]="selectedTabIndex" optionLabel="label" optionValue="value"
-      aria-labelledby="basic" />
+      aria-labelledby="basic" [allowEmpty]="false" />
     <p-button severity="primary" size="small" variant="outlined">
       <span class="material-symbols-outlined">add</span>
       Create
@@ -18,11 +18,12 @@
       <p-tabpanel [value]="0">
         <div class="h-full flex flex-col gap-2">
           <div class="w-full shrink-0">
-            <input type="text" pInputText [(ngModel)]="searchString" placeholder="Search" class="w-full" />
+            <input type="text" pInputText [(ngModel)]="searchString" placeholder="Search"
+              class="w-full rounded-xl border-primary/20 focus:border-primary" />
           </div>
           <div class="flex flex-col gap-2 h-full overflow-auto grow">
             @for (mod of myModList; track mod.id) {
-            <app-mod-card [modData]="mod" />
+              <app-mod-card [modData]="mod" />
             }
           </div>
         </div>

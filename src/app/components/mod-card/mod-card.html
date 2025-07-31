@@ -2,10 +2,12 @@
   <div class="w-full flex justify-between items-start">
     <div class="m-0 text-base">{{modData().name}}</div>
     <div class="shrink-0 flex gap-2">
-      <p-button size="small" severity="secondary" variant="outlined">
+      <p-button size="small" severity="secondary" variant="outlined"
+        pTooltip="View Code" tooltipPosition="top" appendTo="body" [showDelay]="500">
         <span class="material-symbols-outlined">code</span>
       </p-button>
-      <p-button size="small" severity="success" variant="outlined">
+      <p-button size="small" severity="success" variant="outlined"
+        pTooltip="Run Mod" tooltipPosition="top" appendTo="body" [showDelay]="500">
         <span class="material-symbols-outlined">play_arrow</span>
       </p-button>
     </div>

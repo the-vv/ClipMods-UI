@@ -5,5 +5,9 @@
 }
 
 .mod-card {
-  background-color: rgb(from var(--p-surface-950) r g b / 30%);
+  background-color: rgb(from var(--p-surface-950) r g b / 100%);
+
+  &:hover {
+    background-color: rgb(from var(--p-surface-950) r g b / 50%);
+  }
 }
