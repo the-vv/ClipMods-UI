@@ -1,9 +1,9 @@
 <div class="w-full flex flex-col gap-2 h-full">
-  <div class="w-full flex justify-between">
+  <div class="w-full flex justify-between flex-wrap gap-2">
     <p-selectbutton [options]="stateOptions" [(ngModel)]="selectedTabIndex" optionLabel="label" optionValue="value"
       aria-labelledby="basic" [allowEmpty]="false" />
-    <p-button severity="primary" size="small" variant="outlined" (click)="openedCreateModDrawer.set(true)"
-      class="shrink-0">
+    <p-button severity="primary" size="small" variant="outlined"
+      class="shrink-0 ml-auto" routerLink="/create-mod">
       <span class="material-symbols-outlined">add</span>
       Create
     </p-button>
@@ -25,19 +25,19 @@
         </div>
       </p-tabpanel>
       <p-tabpanel [value]="1">
-        hey
+        Its empty here
       </p-tabpanel>
       <p-tabpanel [value]="2">
-        hey
+        <div class="size-full flex items-center justify-center h-full flex-col gap-4">
+          <span class="material-symbols-outlined text-[100px]! text-primary/50">
+            upcoming
+          </span>
+          <span class="text-2xl text-primary/50 text-center">
+            Coming Soon! <br>
+            <small class="text-primary/30">Stay tuned for updates.</small>
+          </span>
+        </div>
       </p-tabpanel>
     </p-tabpanels>
   </p-tabs>
 </div>
-
-
-<p-drawer [(visible)]="openedCreateModDrawer" header="Create Mod" [style]="{ width: '50vw' }" [modal]="true"
-  [closeOnEscape]="true" [position]="'right'" [dismissible]="false">
-  @defer {
-    <app-mod-manage class="block h-full w-full"></app-mod-manage>
-  }
-</p-drawer>

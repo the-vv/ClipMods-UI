@@ -1,0 +1,33 @@
+:host {
+  --p-fieldset-legend-background: transparent;
+
+  ::ng-deep {
+    .p-fieldset {
+      display: flex;
+      flex-direction: column;
+
+      .p-fieldset-content-container {
+        flex-grow: 1;
+
+        .p-fieldset-content {
+          height: 100%;
+          // overflow: auto;
+        }
+      }
+    }
+
+    .editor-container {
+      border-radius: 12px;
+      overflow: clip;
+    }
+
+    .readonly-decoration {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  .err-msg {
+    color: #d9534f;
+    font-size: 0.875rem;
+  }
+}

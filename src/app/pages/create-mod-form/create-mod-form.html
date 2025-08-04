@@ -1,0 +1,54 @@
+<div class="size-full flex gap-4">
+  <div class="h-full w-full flex flex-col gap-4">
+    <div class=" rounded-2xl w-full flex h-full">
+      <p-fieldset legend="Create Mod" styleClass="main-bg-color -mt-5 rounded-2xl h-full"
+        class="h-full w-full grow block">
+        <div class="size-full flex flex-col gap-4" [formGroup]="modForm">
+          <p-message class="shrink-0" severity="secondary" [closable]="true" variant="outlined">
+            <div class="inline-flex items-center gap-4">
+              <span class="material-symbols-outlined">warning</span>
+              Disclaimer: Be careful when writing mods as they will be executed on the browser itself
+              inside a sandbox. So accessing the DOM or accessing any browser APIs is not allowed.
+            </div>
+          </p-message>
+          <div class="shrink-0 w-full flex border border-primary/20 rounded-xl p-3 gap-4">
+            <div class="flex gap-2 items-start flex-col">
+              <label for="name" class="text-sm">Mod Name</label>
+              <input id="name" type="text" pInputText formControlName="name" placeholder="Enter mod name"
+                class="w-full" />
+            </div>
+            <div class="flex gap-2 items-start flex-col">
+              <label for="horizontal" class="text-sm">No. of Inputs</label>
+              <p-inputnumber [showButtons]="true" buttonLayout="horizontal" inputId="horizontal"
+                spinnerMode="horizontal" inputStyleClass="w-12" [min]="1" [formControlName]="'inputCount'">
+                <ng-template #incrementbuttonicon>
+                  <span class="material-symbols-outlined">add</span>
+                </ng-template>
+                <ng-template #decrementbuttonicon>
+                  <span class="material-symbols-outlined">remove</span>
+                </ng-template>
+              </p-inputnumber>
+            </div>
+            <div class="flex gap-2 items-start flex-col">
+              <label for="horizontal" class="text-sm">Visibility</label>
+              <p-selectbutton [options]="stateOptions" formControlName="private" optionLabel="label" optionValue="value"
+                aria-labelledby="basic" [allowEmpty]="false"/>
+            </div>
+            <div class="flex gap-2 items-start flex-col grow min-h-[37px]">
+              <label for="description" class="text-sm">Description</label>
+              <textarea id="description" pTextarea rows="1" formControlName="description"
+                placeholder="Enter mod description" class="w-full"></textarea>
+            </div>
+            <p-button label="Submit" class="self-end" [disabled]="!modForm.valid" (click)="onSubmit()" />
+          </div>
+          <div class="grow">
+            <ngx-monaco-editor [options]="pasteEditorOptions"
+              class="w-full h-full min-w-0 rounded-2xl overflow-clip border border-primary/20"
+              style="height: 100%; width: 100%;" (onInit)="onInitEditor($event)"
+              formControlName="code"></ngx-monaco-editor>
+          </div>
+        </div>
+      </p-fieldset>
+    </div>
+  </div>
+</div>

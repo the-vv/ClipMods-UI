@@ -6,9 +6,9 @@ export const setMonacoTheme = () => {
     base: 'vs-dark',
     inherit: true,
     rules: [
-      { background: '1E1E1E', foreground: 'D4D4D4', fontStyle: 'italic' },
+      { background: '1E1E1E', foreground: 'D4D4D4' },
       { token: 'comment', foreground: '008800', fontStyle: 'italic' },
-      { token: 'keyword', foreground: '0000FF', fontStyle: 'bold' },
+      // { token: 'keyword', foreground: 'DE9087', fontStyle: 'bold' },
     ],
     colors: {
       'editor.background': '#18181b',

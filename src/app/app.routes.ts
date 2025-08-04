@@ -12,6 +12,10 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import('./pages/main/main').then(m => m.Main),
+      },
+      {
+        path: 'create-mod',
+        loadComponent: () => import('./pages/create-mod-form/create-mod-form').then(m => m.CreateModForm),
       }
     ]
   },

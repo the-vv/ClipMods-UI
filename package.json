@@ -29,6 +29,7 @@
     "@primeuix/themes": "^1.2.1",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/toastify-js": "^1.12.4",
+    "constrained-editor-plugin": "^1.4.0",
     "monaco-editor": "^0.52.2",
     "ngx-monaco-editor-v2": "^20.0.0",
     "pocketbase": "^0.26.1",

@@ -8,10 +8,11 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { DrawerModule } from 'primeng/drawer';
 import { ModManage } from "../mod-manage/mod-manage";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-mods-container',
-  imports: [TabsModule, ModCard, SelectButtonModule, FormsModule, ButtonModule, InputTextModule, DrawerModule, ModManage],
+  imports: [TabsModule, ModCard, SelectButtonModule, FormsModule, ButtonModule, InputTextModule, DrawerModule, RouterLink],
   templateUrl: './mods-container.html',
   styleUrl: './mods-container.scss'
 })
