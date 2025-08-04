@@ -64,6 +64,10 @@ export class CreateModForm implements OnInit {
         range,
         allowMultiline: true,
         label: 'utilName'
+      }, {
+        range: [26, 1, 28, 1],
+        allowMultiline: true,
+        label: 'executeFunction'
       }]);
       this.setReadonlyColors(editorInstance);
     });
@@ -79,7 +83,7 @@ export class CreateModForm implements OnInit {
         stickiness: 1
       }
     }, {
-      range: new monaco.Range(24, 1, 26, 1),
+      range: new monaco.Range(24, 1, 25, 1),
       options: {
         isWholeLine: true,
         className: 'readonly-decoration',

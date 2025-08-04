@@ -24,4 +24,6 @@ function execute(inputArgs, utils) {
 
     return response;
 }
+// Below area is usable for declaring utility functions or other global variables
+
 `.trimStart();
