@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FieldsetModule } from "primeng/fieldset";
 import { themeName } from '../../editor-theme';
 import { MessageModule } from 'primeng/message';
@@ -13,6 +13,9 @@ import { TextareaModule } from 'primeng/textarea';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { ButtonModule } from 'primeng/button';
 import { Toaster } from '../../classes/toster';
+import { ModService } from '../../services/mod-service';
+import { Router } from '@angular/router';
+import { Mod } from '../../models/mod.model';
 
 @Component({
   selector: 'create-mod-form',
@@ -21,6 +24,9 @@ import { Toaster } from '../../classes/toster';
   styleUrls: ['./create-mod-form.scss']
 })
 export class CreateModForm implements OnInit {
+
+  private readonly modService = inject(ModService);
+  private readonly router= inject(Router);
 
   modForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -96,6 +102,20 @@ export class CreateModForm implements OnInit {
   onSubmit() {
     if (this.modForm.valid) {
       // Handle form submission
+      const mod: Mod = {
+        id: '',
+        name: this.modForm.value.name || '',
+        description: this.modForm.value.description || '',
+        code: this.modForm.value.code || DEFAULT_MOD_CODE,
+        isPublic: !this.modForm.value.private,
+      }
+      this.modService.createMod(mod).then(() => {
+        Toaster.showSuccess('Mod created successfully!');
+        this.router.navigate(['/']);
+      }).catch(error => {
+        console.error('Error creating mod:', error);
+        Toaster.showError('Failed to create mod. Please try again.');
+      });
     } else {
       Toaster.showError('Please fill in all required fields.');
     }

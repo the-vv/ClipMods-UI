@@ -5,8 +5,9 @@ export interface Mod {
   code?: string;
   author?: string;
   version?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  created?: Date;
+  updated?: Date;
   tags?: string[];
   isPublic?: boolean;
+  publicApprovalStatus?: 'pending' | 'approved' | 'rejected' | null;
 }

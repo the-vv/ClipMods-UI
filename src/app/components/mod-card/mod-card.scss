@@ -11,3 +11,11 @@
     background-color: rgb(from var(--p-surface-950) r g b / 50%);
   }
 }
+
+.badge {
+  background-color: var(--p-surface-600);
+  color: var(--p-text-300);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  width: fit-content;
+}

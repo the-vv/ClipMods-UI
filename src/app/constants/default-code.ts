@@ -13,7 +13,7 @@ export const DEFAULT_MOD_CODE = `
  * @param {string[]} inputArgs
  * @param {{ _: typeof import("lodash"), dateFns: typeof import("date-fns") }} utils
  */
-function execute(inputArgs, utils) {
+function executeMod(inputArgs, utils) {
     const response = { result: "" };
 
     const { _, dateFns } = utils;

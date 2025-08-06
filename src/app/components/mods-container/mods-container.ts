@@ -1,4 +1,4 @@
-import { Component, model, signal } from '@angular/core';
+import { Component, inject, model, OnInit, signal } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
 import { Mod } from '../../models/mod.model';
 import { ModCard } from "../mod-card/mod-card";
@@ -9,6 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DrawerModule } from 'primeng/drawer';
 import { ModManage } from "../mod-manage/mod-manage";
 import { RouterLink } from '@angular/router';
+import { ModService } from '../../services/mod-service';
 
 @Component({
   selector: 'app-mods-container',
@@ -16,7 +17,9 @@ import { RouterLink } from '@angular/router';
   templateUrl: './mods-container.html',
   styleUrl: './mods-container.scss'
 })
-export class ModsContainer {
+export class ModsContainer implements OnInit {
+
+  private readonly modService = inject(ModService);
 
   openedCreateModDrawer = model(false);
   stateOptions: any[] = [
@@ -26,19 +29,17 @@ export class ModsContainer {
   ];
   selectedTabIndex = signal(0);
   searchString = model('');
-  myModList: Mod[] = [
-    {
-      id: '1',
-      name: 'Example Mod 1',
-      description: 'This is an example mod description.',
-      version: '1.0.0',
-    },
-    {
-      id: '2',
-      name: 'Example Mod 2',
-      description: 'This is another example mod description.',
-      version: '1.0.1',
-    },
-  ]
+  myModList = signal<Mod[]>([]);
 
+  ngOnInit(): void {
+    this.loadMyMods();
+  }
+
+  loadMyMods() {
+    this.modService.getMyMods().then(mods => {
+      this.myModList.set(mods);
+    }).catch(error => {
+      console.error('Error loading mods:', error);
+    });
+  }
 }
