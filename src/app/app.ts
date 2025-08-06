@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ModEngine } from './services/mod-engine';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,11 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
-  protected readonly title = signal('clipMods');
+export class App implements AfterViewInit {
+  private readonly modEngineService = inject(ModEngine);
+  iframeRef = viewChild.required<ElementRef<HTMLIFrameElement>>('sandbox');
+
+  ngAfterViewInit() {
+    this.modEngineService.initSandBox(this.iframeRef().nativeElement);
+  }
 }

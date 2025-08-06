@@ -16,6 +16,7 @@ import { Toaster } from '../../classes/toster';
 import { ModService } from '../../services/mod-service';
 import { Router } from '@angular/router';
 import { Mod } from '../../models/mod.model';
+import { ModEngine } from '../../services/mod-engine';
 
 @Component({
   selector: 'create-mod-form',
@@ -27,6 +28,7 @@ export class CreateModForm implements OnInit {
 
   private readonly modService = inject(ModService);
   private readonly router= inject(Router);
+  private readonly modEngineService = inject(ModEngine);
 
   modForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -101,23 +103,32 @@ export class CreateModForm implements OnInit {
 
   onSubmit() {
     if (this.modForm.valid) {
-      // Handle form submission
-      const mod: Mod = {
-        id: '',
-        name: this.modForm.value.name || '',
-        description: this.modForm.value.description || '',
-        code: this.modForm.value.code || DEFAULT_MOD_CODE,
-        isPublic: !this.modForm.value.private,
-        inputCount: this.modForm.value.inputCount || 1,
-        version: 1
-      }
-      this.modService.createMod(mod).then(() => {
-        Toaster.showSuccess('Mod created successfully!');
-        this.router.navigate(['/']);
+      this.modEngineService.runJsCode(
+        this.modForm.value.code!,
+        ["hello", "world"] // Example inputs, replace with actual inputs as needed
+      ).then(() => {
+        Toaster.showSuccess('Mod code executed successfully!');
       }).catch(error => {
-        console.error('Error creating mod:', error);
-        Toaster.showError('Failed to create mod. Please try again.');
+        console.log('Error executing mod code:', error);
+        Toaster.showError('Failed to execute mod code. Please check the console for details.');
       });
+      // Handle form submission
+      // const mod: Mod = {
+      //   id: '',
+      //   name: this.modForm.value.name || '',
+      //   description: this.modForm.value.description || '',
+      //   code: this.modForm.value.code || DEFAULT_MOD_CODE,
+      //   isPublic: !this.modForm.value.private,
+      //   inputCount: this.modForm.value.inputCount || 1,
+      //   version: 1
+      // }
+      // this.modService.createMod(mod).then(() => {
+      //   Toaster.showSuccess('Mod created successfully!');
+      //   this.router.navigate(['/']);
+      // }).catch(error => {
+      //   console.error('Error creating mod:', error);
+      //   Toaster.showError('Failed to create mod. Please try again.');
+      // });
     } else {
       Toaster.showError('Please fill in all required fields.');
     }
