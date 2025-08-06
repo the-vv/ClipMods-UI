@@ -2,12 +2,13 @@ export interface Mod {
   id: string;
   name: string;
   description: string;
-  code?: string;
+  code: string;
   author?: string;
-  version?: string;
+  version: number;
   created?: Date;
   updated?: Date;
   tags?: string[];
-  isPublic?: boolean;
+  isPublic: boolean;
+  inputCount: number;
   publicApprovalStatus?: 'pending' | 'approved' | 'rejected' | null;
 }

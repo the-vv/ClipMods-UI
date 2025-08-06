@@ -108,6 +108,8 @@ export class CreateModForm implements OnInit {
         description: this.modForm.value.description || '',
         code: this.modForm.value.code || DEFAULT_MOD_CODE,
         isPublic: !this.modForm.value.private,
+        inputCount: this.modForm.value.inputCount || 1,
+        version: 1
       }
       this.modService.createMod(mod).then(() => {
         Toaster.showSuccess('Mod created successfully!');

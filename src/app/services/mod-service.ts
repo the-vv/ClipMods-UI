@@ -21,7 +21,7 @@ export class ModService {
       .getFullList<Mod>(999, {
         filter: `createdBy = "${this.pbService.getCurrentUser()?.id}"`,
         sort: '-updated',
-        fields: 'id,name,description,version,isPublic,updated',
+        fields: 'id,name,description,version,inputCount,isPublic,updated',
       });
   }
 }
