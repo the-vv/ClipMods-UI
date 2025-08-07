@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FieldsetModule } from "primeng/fieldset";
 import { themeName } from '../../editor-theme';
 import { MessageModule } from 'primeng/message';
@@ -107,10 +107,10 @@ export class CreateModForm implements OnInit {
         this.modForm.value.code!,
         ["hello", "world"] // Example inputs, replace with actual inputs as needed
       ).then(() => {
-        Toaster.showSuccess('Mod code executed successfully!');
+        Toaster.showSuccess('Mod executed successfully!');
       }).catch(error => {
-        console.log('Error executing mod code:', error);
-        Toaster.showError('Failed to execute mod code. Please check the console for details.');
+        console.log('Error executing mod:', error);
+        Toaster.showError('Failed to execute mod. Please check the console for details.');
       });
       // Handle form submission
       // const mod: Mod = {
