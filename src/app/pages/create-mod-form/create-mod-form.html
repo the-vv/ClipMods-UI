@@ -1,5 +1,5 @@
-<div class="size-full flex gap-4">
-  <div class="h-full w-full flex flex-col gap-4">
+<div class="h-full w-full flex flex-col gap-4">
+  <div class="size-full flex gap-4">
     <div class=" rounded-2xl w-full flex h-full">
       <p-fieldset legend="Create Mod" styleClass="main-bg-color -mt-5 rounded-2xl h-full"
         class="h-full w-full grow block">
@@ -32,14 +32,14 @@
             <div class="flex gap-2 items-start flex-col">
               <label for="horizontal" class="text-sm">Visibility</label>
               <p-selectbutton [options]="stateOptions" formControlName="private" optionLabel="label" optionValue="value"
-                aria-labelledby="basic" [allowEmpty]="false"/>
+                aria-labelledby="basic" [allowEmpty]="false" />
             </div>
             <div class="flex gap-2 items-start flex-col grow min-h-[37px]">
               <label for="description" class="text-sm">Description</label>
               <textarea id="description" pTextarea rows="1" formControlName="description"
                 placeholder="Enter mod description" class="w-full"></textarea>
             </div>
-            <p-button label="Submit" class="self-end" [disabled]="!modForm.valid" (click)="onSubmit()" />
+            <p-button label="Test & Save" class="self-end" [disabled]="!modForm.valid" (click)="onSubmit()" />
           </div>
           <div class="grow">
             <ngx-monaco-editor [options]="pasteEditorOptions"
@@ -52,3 +52,47 @@
     </div>
   </div>
 </div>
+
+<p-drawer [(visible)]="modTestSidebarConfig().visible" header="Test & Save Mod"
+  position="right" styleClass="w-[80vw]">
+  <div class="h-full flex flex-col">
+    <p-fieldset [legend]="'Options'" styleClass="main-bg-color rounded-2xl h-full shrink-0"
+      class="h-auto w-full block">
+      <div class="w-full flex gap-4 items-center">
+        <span class="material-symbols-outlined text-primary opacity-75">info</span>
+        <p class="opacity-75">
+          Try running the mod with different inputs to see how it behaves. <br>
+          If the mod runs successfully and produces the expected output, you can save it.
+        </p>
+        <div class="shrink-0 flex gap-2 ml-auto">
+          <p-button label="Run Mod" (click)="runMod()" variant="outlined"
+            [disabled]="!modForm.valid || !modTestSidebarConfig().inputs">
+          </p-button>
+          <p-button label="Save Mod" (click)="onSave()"
+            [disabled]="!modTestSidebarConfig().runSuccess">
+          </p-button>
+        </div>
+      </div>
+    </p-fieldset>
+    <div class="h-full flex gap-6 overflow-auto">
+      <div class="grow overflow-auto flex flex-col gap-2 pt-2 w-[50%]">
+        @for (i of getIterableOf(modTestSidebarConfig().inputs); track $index) {
+          <p-fieldset [legend]="'Input ' + ($index + 1)" styleClass="main-bg-color rounded-2xl h-full"
+            class="h-full w-full grow block">
+            <ngx-monaco-editor [options]="plainTextOptions"
+              class="w-full h-full grow min-h-[25vh] min-w-0 rounded-2xl overflow-clip" style="height: 100%; width: 100%;"
+              [(ngModel)]="modTestSidebarConfig().args[$index]"></ngx-monaco-editor>
+          </p-fieldset>
+        }
+      </div>
+      <div class="grow overflow-auto flex flex-col gap-2 pt-2 w-[50%] h-full">
+        <p-fieldset [legend]="'Output'" styleClass="main-bg-color rounded-2xl h-full block"
+          class="h-full w-full grow block">
+          <ngx-monaco-editor [options]="plainTextOptionsWithReadonly" (onInit)="setReadonly($event)"
+            class="w-full h-full grow min-h-[25vh] min-w-0 rounded-2xl overflow-clip" style="height: 100%; width: 100%;"
+            [(ngModel)]="modTestSidebarConfig().output"></ngx-monaco-editor>
+        </p-fieldset>
+      </div>
+    </div>
+  </div>
+</p-drawer>

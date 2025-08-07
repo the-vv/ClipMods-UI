@@ -39,9 +39,11 @@ export class ModEngine {
         if (e.data.type === ESandboxResultTypes.MOD_RESULT) {
           clearTimeout(timer);
           resolve(e.data.data);
+          this.cleanup();
         } else if (e.data.type === ESandboxResultTypes.MOD_ERROR) {
           clearTimeout(timer);
           reject(new Error(e.data.data));
+          this.cleanup();
         } else {
           clearTimeout(timer);
           console.log('Unknown message type:', e.data.type);

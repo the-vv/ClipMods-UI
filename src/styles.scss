@@ -25,3 +25,18 @@ router-outlet {
 .p-tooltip-text {
   font-size: 0.85rem;
 }
+
+.p-fieldset {
+  display: flex;
+  flex-direction: column;
+
+  .p-fieldset-content-container {
+    flex-grow: 1;
+    height: 100%;
+
+    .p-fieldset-content {
+      height: 100%;
+      // overflow: auto;
+    }
+  }
+}

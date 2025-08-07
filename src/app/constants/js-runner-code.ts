@@ -35,7 +35,7 @@ export function getJsRunnerCode(jsCode: string, inputs: string[]): string {
           console.log('Mod execution failed: executeMod did not return a valid result');
           parent.postMessage({
             type: '${ESandboxResultTypes.MOD_ERROR}',
-            data: 'executeMod function is not defined or did not return a valid result'
+            data: 'executeMod did not return a valid result'
           }, '${window.location.origin}');
         }
       } else {

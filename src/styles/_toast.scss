@@ -1,18 +1,20 @@
 .toastify.success-toast-clipMods {
-  color: black !important;
-  background: white !important;
-  border-radius: 6px;
+  color: #4CAF50 !important;
+  background: var(--p-surface-900) !important;
+  border-radius: 12px;
+  border: 2px solid #4CAF50;
 
   .toast-close {
-    color: black !important;
+    color: white !important;
     margin-left: 12px;
   }
 }
 
 .error-toast-clipMods {
-  color: white !important;
-  background: rgba(255, 0, 0, 0.463) !important;
-  border-radius: 6px;
+  color: #d9534f !important;
+  background: var(--p-surface-900);
+  border-radius: 12px;
+  border: 2px solid #d9534f;
 
   .toast-close {
     color: white !important;

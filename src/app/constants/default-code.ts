@@ -18,9 +18,9 @@ function executeMod(inputArgs, utils) {
 
     const { _, dateFns } = utils;
 
-    const [$0, $1] = inputArgs; // Adjust as needed for more args
+    const [$0] = inputArgs; // Adjust as needed for more args, e.g., const [$0, $1, $2] = inputArgs;
     // Write your logic here using $0, $1, _, dateFns, etc.
-    // Example: response.result = _.startCase($0 + " " + $1);
+    // Example: response.result = _.camelCase($0);
 
     return response;
 }

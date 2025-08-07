@@ -15,13 +15,13 @@ import { ButtonModule } from 'primeng/button';
 import { Toaster } from '../../classes/toster';
 import { ModService } from '../../services/mod-service';
 import { Router } from '@angular/router';
-import { Mod } from '../../models/mod.model';
 import { ModEngine } from '../../services/mod-engine';
+import { DrawerModule } from 'primeng/drawer';
 
 @Component({
   selector: 'create-mod-form',
   templateUrl: 'create-mod-form.html',
-  imports: [FieldsetModule, ButtonModule, SelectButtonModule, TextareaModule, InputTextModule, MessageModule, MonacoEditorModule, FormsModule, InputNumberModule, ReactiveFormsModule],
+  imports: [FieldsetModule, ButtonModule, DrawerModule, SelectButtonModule, TextareaModule, InputTextModule, MessageModule, MonacoEditorModule, FormsModule, InputNumberModule, ReactiveFormsModule],
   styleUrls: ['./create-mod-form.scss']
 })
 export class CreateModForm implements OnInit {
@@ -47,6 +47,28 @@ export class CreateModForm implements OnInit {
     automaticLayout: true,
     minimap: { enabled: false },
   };
+  plainTextOptions = {
+    ...this.pasteEditorOptions,
+    language: 'plaintext',
+    scrollbar: {
+      alwaysConsumeMouseWheel: false
+    }
+  }
+  plainTextOptionsWithReadonly = {
+    ...this.plainTextOptions,
+    readOnly: true,
+  }
+  modTestSidebarConfig = signal({
+    visible: false,
+    inputs: 0,
+    code: '',
+    args: [] as string[],
+    output: '',
+    runSuccess: false
+  })
+  getIterableOf(count: number) {
+    return Array.from({ length: count }, (_, i) => i + 1);
+  }
 
   ngOnInit(): void {
     this.modForm.patchValue({
@@ -58,9 +80,9 @@ export class CreateModForm implements OnInit {
   onInitEditor(editorInstance: any) {
     setTimeout(() => {
       const monaco = (window as any).monaco;
-      editorInstance.addCommand(monaco.KeyCode.KeyA | monaco.KeyMod.CtrlCmd, () => {
-        // Do nothing, effectively disabling select all
-      }, 'editorTextFocus');
+      // editorInstance.addCommand(monaco.KeyCode.KeyA | monaco.KeyMod.CtrlCmd, () => {
+      //   // Do nothing, effectively disabling select all
+      // }, 'editorTextFocus');
       const model = editorInstance.getModel();
 
       // - Configuration for the Constrained Editor : Starts Here
@@ -103,15 +125,23 @@ export class CreateModForm implements OnInit {
 
   onSubmit() {
     if (this.modForm.valid) {
-      this.modEngineService.runJsCode(
-        this.modForm.value.code!,
-        ["hello", "world"] // Example inputs, replace with actual inputs as needed
-      ).then(() => {
-        Toaster.showSuccess('Mod executed successfully!');
-      }).catch(error => {
-        console.log('Error executing mod:', error);
-        Toaster.showError('Failed to execute mod. Please check the console for details.');
-      });
+      this.modTestSidebarConfig.set({
+        code: this.modForm.value.code || DEFAULT_MOD_CODE,
+        inputs: this.modForm.value.inputCount || 1,
+        visible: true,
+        args: Array.from({ length: this.modForm.value.inputCount || 1 }, (_, i) => ``),
+        output: '',
+        runSuccess: false
+      })
+      // this.modEngineService.runJsCode(
+      //   this.modForm.value.code!,
+      //   ["hello", "world"] // Example inputs, replace with actual inputs as needed
+      // ).then(() => {
+      //   Toaster.showSuccess('Mod executed successfully!');
+      // }).catch(error => {
+      //   console.log('Error executing mod:', error);
+      //   Toaster.showError('Failed to execute mod. Please check the console for details.');
+      // });
       // Handle form submission
       // const mod: Mod = {
       //   id: '',
@@ -132,5 +162,33 @@ export class CreateModForm implements OnInit {
     } else {
       Toaster.showError('Please fill in all required fields.');
     }
+  }
+
+  onSave() {}
+
+  runMod() {
+    if (this.modTestSidebarConfig().args.every(arg => !arg.trim())) {
+      Toaster.showError('Please provide at least one input argument.');
+      return;
+    }
+    this.modEngineService.runJsCode(
+      this.modForm.value.code!,
+      this.modTestSidebarConfig().args || [] // Use the args from the sidebar config
+    ).then((res: string) => {
+      Toaster.showSuccess('Mod executed successfully!');
+      this.modTestSidebarConfig.set({
+        ...this.modTestSidebarConfig(),
+        output: res,
+        runSuccess: true
+      });
+    }).catch(error => {
+      console.log('Error executing mod:', error);
+      Toaster.showError('Failed to execute mod. Please check the console for details.');
+    });
+  }
+
+  setReadonly(editorInstance: any) {
+    const monaco = (window as any).monaco;
+    editorInstance.updateOptions({ readOnly: true });
   }
 }
