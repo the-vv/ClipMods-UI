@@ -14,8 +14,8 @@
   </div>
   <p class="m-0 text-sm text-secondary opacity-50 -mt-0.5">{{modData().description}}</p>
   <div class="flex gap-2 opacity-50 mt-2">
-    <small class="badge">V{{modData().version}}</small>
-    <small class="badge">{{modData().updated | date: 'd/M/yyyy h:mm a'}}</small>
-  <small class="badge">{{modData().inputCount}} Inputs</small>
+    <small class="badge border border-primary/10">{{modData().inputCount}} Inputs</small>
+    <small class="badge border border-primary/10">V{{modData().version}}</small>
+    <small class="badge border border-primary/10">Updated: {{modData().updated | date: 'd/M/yyyy h:mm a'}}</small>
   </div>
 </div>

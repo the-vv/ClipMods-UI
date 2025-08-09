@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { PocketbaseService } from './pocketbase-service';
 import { CollectionNames } from '../enums/collection-names';
 import { Mod } from '../models/mod.model';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,19 @@ export class ModService {
 
   private readonly pbService = inject(PocketbaseService);
 
+  public triggerModWithId$ = new Subject<string>();
+
   createMod(mod: Mod) {
     return this.pbService.getPocketBaseInstance()
       .collection(CollectionNames.Mods).create(mod);
+  }
+
+  getModelById(modId: string): Promise<Mod> {
+    return this.pbService.getPocketBaseInstance()
+      .collection(CollectionNames.Mods)
+      .getOne<Mod>(modId, {
+        expand: 'createdBy',
+      });
   }
 
   getMyMods(search?: string): Promise<Mod[]> {

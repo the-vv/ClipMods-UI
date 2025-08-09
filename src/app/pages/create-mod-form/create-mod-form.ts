@@ -139,32 +139,6 @@ export class CreateModForm implements OnInit {
         output: '',
         runSuccess: false
       })
-      // this.modEngineService.runJsCode(
-      //   this.modForm.value.code!,
-      //   ["hello", "world"] // Example inputs, replace with actual inputs as needed
-      // ).then(() => {
-      //   Toaster.showSuccess('Mod executed successfully!');
-      // }).catch(error => {
-      //   console.log('Error executing mod:', error);
-      //   Toaster.showError('Failed to execute mod. Please check the console for details.');
-      // });
-      // Handle form submission
-      // const mod: Mod = {
-      //   id: '',
-      //   name: this.modForm.value.name || '',
-      //   description: this.modForm.value.description || '',
-      //   code: this.modForm.value.code || DEFAULT_MOD_CODE,
-      //   isPublic: !this.modForm.value.private,
-      //   inputCount: this.modForm.value.inputCount || 1,
-      //   version: 1
-      // }
-      // this.modService.createMod(mod).then(() => {
-      //   Toaster.showSuccess('Mod created successfully!');
-      //   this.router.navigate(['/']);
-      // }).catch(error => {
-      //   console.error('Error creating mod:', error);
-      //   Toaster.showError('Failed to create mod. Please try again.');
-      // });
     } else {
       Toaster.showError('Please fill in all required fields.');
     }
