@@ -17,11 +17,13 @@ import { ModService } from '../../services/mod-service';
 import { Router } from '@angular/router';
 import { ModEngine } from '../../services/mod-engine';
 import { DrawerModule } from 'primeng/drawer';
+import { DialogModule } from 'primeng/dialog';
+import { Mod } from '../../models/mod.model';
 
 @Component({
   selector: 'create-mod-form',
   templateUrl: 'create-mod-form.html',
-  imports: [FieldsetModule, ButtonModule, DrawerModule, SelectButtonModule, TextareaModule, InputTextModule, MessageModule, MonacoEditorModule, FormsModule, InputNumberModule, ReactiveFormsModule],
+  imports: [FieldsetModule, ButtonModule, DrawerModule, SelectButtonModule, DialogModule, TextareaModule, InputTextModule, MessageModule, MonacoEditorModule, FormsModule, InputNumberModule, ReactiveFormsModule],
   styleUrls: ['./create-mod-form.scss']
 })
 export class CreateModForm implements OnInit {
@@ -65,6 +67,10 @@ export class CreateModForm implements OnInit {
     args: [] as string[],
     output: '',
     runSuccess: false
+  })
+  modErrDialogConfig = signal({
+    visible: false,
+    error: ''
   })
   getIterableOf(count: number) {
     return Array.from({ length: count }, (_, i) => i + 1);
@@ -164,7 +170,23 @@ export class CreateModForm implements OnInit {
     }
   }
 
-  onSave() {}
+  onSave() {
+    const mod: Mod = {
+      name: this.modForm.value.name || '',
+      description: this.modForm.value.description || '',
+      code: this.modForm.value.code!,
+      isPublic: !this.modForm.value.private,
+      inputCount: this.modForm.value.inputCount || 1,
+      version: 1
+    }
+    this.modService.createMod(mod).then(() => {
+      Toaster.showSuccess('Mod created successfully!');
+      this.router.navigate(['/']);
+    }).catch(error => {
+      console.error('Error creating mod:', error);
+      Toaster.showError('Failed to create mod. Please try again.');
+    });
+  }
 
   runMod() {
     if (this.modTestSidebarConfig().args.every(arg => !arg.trim())) {
@@ -183,12 +205,23 @@ export class CreateModForm implements OnInit {
       });
     }).catch(error => {
       console.log('Error executing mod:', error);
-      Toaster.showError('Failed to execute mod. Please check the console for details.');
+      this.modErrDialogConfig.set({
+        visible: true,
+        error: error.message || 'An error occurred while executing the mod code'
+      });
     });
   }
 
   setReadonly(editorInstance: any) {
     const monaco = (window as any).monaco;
     editorInstance.updateOptions({ readOnly: true });
+  }
+
+  closeErrorDialog() {
+    this.modErrDialogConfig.set({
+      ...this.modErrDialogConfig(),
+      visible: false,
+      // error: ''
+    });
   }
 }

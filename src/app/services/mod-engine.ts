@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { getJsRunnerCode } from '../constants/js-runner-code';
 import { ESandboxResultTypes } from '../enums/mod-results.enum';
-import { fromEvent, Subject, Subscription, take, takeUntil } from 'rxjs';
+import { BehaviorSubject, fromEvent, Subject, Subscription, take, takeUntil } from 'rxjs';
 import { CommonService } from './common-service';
 
 @Injectable({
@@ -14,6 +14,7 @@ export class ModEngine {
   sandBoxRef: HTMLIFrameElement | null = null;
   sandBoxMessage$ = fromEvent<MessageEvent>(window, 'message');
   private stopListening$ = new Subject<void>();
+  modIsRunning$ = new BehaviorSubject<boolean>(false);
 
   initSandBox(iframeElement: HTMLIFrameElement) {
     this.sandBoxRef = iframeElement;
@@ -55,6 +56,7 @@ export class ModEngine {
         <script>${getJsRunnerCode(code, inputs)}</script>
       `;
       this.commonService.setLoading(true);
+      this.modIsRunning$.next(true);
     });
   }
 
@@ -69,5 +71,6 @@ export class ModEngine {
     this.killSandBox();
     this.stopListening$.next();
     this.commonService.setLoading(false);
+    this.modIsRunning$.next(false);
   }
 }

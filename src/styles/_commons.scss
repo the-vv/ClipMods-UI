@@ -1,0 +1,8 @@
+.required-label {
+  &::after {
+    content: '*';
+    color: red;
+    margin-left: 0.1rem;
+    vertical-align: text-bottom;
+  }
+}

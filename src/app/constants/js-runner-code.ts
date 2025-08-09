@@ -32,10 +32,10 @@ export function getJsRunnerCode(jsCode: string, inputs: string[]): string {
             data: result.result
           }, '${window.location.origin}');
         } else {
-          console.log('Mod execution failed: executeMod did not return a valid result');
+          console.log('Mod execution failed: Function executeMod did not return a valid result');
           parent.postMessage({
             type: '${ESandboxResultTypes.MOD_ERROR}',
-            data: 'executeMod did not return a valid result'
+            data: 'Function executeMod did not return a valid result'
           }, '${window.location.origin}');
         }
       } else {

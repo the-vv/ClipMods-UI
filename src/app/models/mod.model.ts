@@ -1,5 +1,5 @@
 export interface Mod {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   code: string;

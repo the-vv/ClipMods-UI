@@ -13,7 +13,7 @@
           </p-message>
           <div class="shrink-0 w-full flex border border-primary/20 rounded-xl p-3 gap-4">
             <div class="flex gap-2 items-start flex-col">
-              <label for="name" class="text-sm">Mod Name</label>
+              <label for="name" class="text-sm required-label">Mod Name</label>
               <input id="name" type="text" pInputText formControlName="name" placeholder="Enter mod name"
                 class="w-full" />
             </div>
@@ -53,11 +53,9 @@
   </div>
 </div>
 
-<p-drawer [(visible)]="modTestSidebarConfig().visible" header="Test & Save Mod"
-  position="right" styleClass="w-[80vw]">
+<p-drawer [(visible)]="modTestSidebarConfig().visible" header="Test & Save Mod" position="right" styleClass="w-[80vw]">
   <div class="h-full flex flex-col">
-    <p-fieldset [legend]="'Options'" styleClass="main-bg-color rounded-2xl h-full shrink-0"
-      class="h-auto w-full block">
+    <p-fieldset [legend]="'Options'" styleClass="main-bg-color rounded-2xl h-full shrink-0" class="h-auto w-full block">
       <div class="w-full flex gap-4 items-center">
         <span class="material-symbols-outlined text-primary opacity-75">info</span>
         <p class="opacity-75">
@@ -68,26 +66,25 @@
           <p-button label="Run Mod" (click)="runMod()" variant="outlined"
             [disabled]="!modForm.valid || !modTestSidebarConfig().inputs">
           </p-button>
-          <p-button label="Save Mod" (click)="onSave()"
-            [disabled]="!modTestSidebarConfig().runSuccess">
+          <p-button label="Save Mod" (click)="onSave()" [disabled]="!modTestSidebarConfig().runSuccess">
           </p-button>
         </div>
       </div>
     </p-fieldset>
     <div class="h-full flex gap-6 overflow-auto">
-      <div class="grow overflow-auto flex flex-col gap-2 pt-2 w-[50%]">
+      <div class="grow flex flex-col gap-2 pt-2 w-[50%]">
         @for (i of getIterableOf(modTestSidebarConfig().inputs); track $index) {
           <p-fieldset [legend]="'Input ' + ($index + 1)" styleClass="main-bg-color rounded-2xl h-full"
-            class="h-full w-full grow block">
+            class="h-full w-full grow block min-w-0">
             <ngx-monaco-editor [options]="plainTextOptions"
               class="w-full h-full grow min-h-[25vh] min-w-0 rounded-2xl overflow-clip" style="height: 100%; width: 100%;"
               [(ngModel)]="modTestSidebarConfig().args[$index]"></ngx-monaco-editor>
           </p-fieldset>
         }
       </div>
-      <div class="grow overflow-auto flex flex-col gap-2 pt-2 w-[50%] h-full">
+      <div class="grow flex flex-col gap-2 pt-2 w-[50%] h-full">
         <p-fieldset [legend]="'Output'" styleClass="main-bg-color rounded-2xl h-full block"
-          class="h-full w-full grow block">
+          class="h-full w-full grow block min-w-0">
           <ngx-monaco-editor [options]="plainTextOptionsWithReadonly" (onInit)="setReadonly($event)"
             class="w-full h-full grow min-h-[25vh] min-w-0 rounded-2xl overflow-clip" style="height: 100%; width: 100%;"
             [(ngModel)]="modTestSidebarConfig().output"></ngx-monaco-editor>
@@ -96,3 +93,18 @@
     </div>
   </div>
 </p-drawer>
+
+<p-dialog header="Mod Execution Failed" [modal]="true" [(visible)]="modErrDialogConfig().visible" [closable]="true"
+  [dismissableMask]="true" [style]="{ width: 'auto', minWidth: '36rem', maxWidth: '90vw' }">
+  <div class="w-full">
+    <p class="text-base font-semibold mb-2 text-red-500 border border-red-500/50 bg-red-950/30 p-6 rounded-lg flex gap-4 items-start">
+      <span class="material-symbols-outlined">
+        error
+      </span>
+      Error: {{ modErrDialogConfig().error }}
+    </p>
+  </div>
+  <div class="flex justify-end gap-2 mt-4">
+    <p-button label="Close" severity="secondary" (click)="closeErrorDialog()" />
+  </div>
+</p-dialog>

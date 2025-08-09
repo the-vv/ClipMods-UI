@@ -2,6 +2,7 @@
 @use './tailwind'as *;
 @use "toastify-js/src/toastify.css"as *;
 @use './styles/toast'as *;
+@use './styles/commons'as *;
 
 :root {
   font-size: 14px;
