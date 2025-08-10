@@ -15,10 +15,10 @@
   </div>
   <div
     class="option-card flex gap-4 items-center border border-primary/10 py-1! pr-1! [&_*]:border-primary/10 overflow-clip">
-    <label for="autoCopy">No. of Inputs</label>
+    <label for="noOfInputs">No. of Inputs</label>
     <div class="flex gap-2 items-start flex-col">
       <!-- <label for="horizontal" class="text-sm">No. of Inputs</label> -->
-      <p-inputnumber [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal"
+      <p-inputnumber [showButtons]="true" buttonLayout="horizontal" inputId="noOfInputs" spinnerMode="horizontal"
         inputStyleClass="w-12 text-center" [min]="1" [(ngModel)]="modOptions().inputCount"
         (ngModelChange)="onOptionChange('inputCount')">
         <ng-template #incrementbuttonicon>
