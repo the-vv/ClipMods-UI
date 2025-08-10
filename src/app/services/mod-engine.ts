@@ -46,7 +46,7 @@ export class ModEngine {
         } else {
           clearTimeout(timer);
           console.log('Unknown message type:', e.data.type);
-          reject(new Error('Unknown message type: ' + e.data.type));
+          reject(new Error(!noDev ? ('Unknown message type: ' + (e.data.type || 'N/A')) : 'Something went wrong'));
         }
         this.cleanup();
       });

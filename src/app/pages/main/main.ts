@@ -14,6 +14,7 @@ import { ModEngine } from '../../services/mod-engine';
 import { Toaster } from '../../classes/toster';
 import { Dialog } from "primeng/dialog";
 import { Button } from "primeng/button";
+import { CommonService } from '../../services/common-service';
 
 @Component({
   selector: 'app-main',
@@ -25,6 +26,7 @@ export class Main {
 
   private readonly modService = inject(ModService);
   private readonly modEngineService = inject(ModEngine);
+  private readonly commonService = inject(CommonService);
 
   pasteEditorOptions = {
     theme: themeName,
@@ -56,10 +58,13 @@ export class Main {
         Toaster.showError('Please provide input arguments to run the mod');
         return;
       }
+      this.commonService.setLoading(true);
       this.modService.getModelById(modId).then(mod => {
-        this.modEngineService.runJsCode(mod.code, this.inputArgs()).then(result => {
+        this.commonService.setLoading(false);
+        this.modEngineService.runJsCode(mod.code, this.inputArgs(), true).then(result => {
           this.modResult(result);
         }).catch(error => {
+          this.commonService.setLoading(false);
           this.modErrDialogConfig.set({
             visible: true,
             error: error.message || 'An error occurred while executing the mod code'
