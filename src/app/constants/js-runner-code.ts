@@ -1,13 +1,11 @@
 import { ESandboxResultTypes } from "../enums/mod-results.enum";
 
-export function getJsRunnerCode(jsCode: string, inputs: string[]): string {
+export function getJsRunnerCode(jsCode: string, inputs: string[], noDev: boolean): string {
   return `
   try {
     ${jsCode}
     document.addEventListener("DOMContentLoaded", function() {
       const inputs = ${JSON.stringify(inputs)};
-      console.log('Inputs:', inputs);
-      // Ensure the executeMod function is defined
       if (typeof executeMod === 'function') {
         // Call the executeMod function with inputs
         const utilsObject = {
@@ -35,14 +33,14 @@ export function getJsRunnerCode(jsCode: string, inputs: string[]): string {
           console.log('Mod execution failed: Function executeMod did not return a valid result');
           parent.postMessage({
             type: '${ESandboxResultTypes.MOD_ERROR}',
-            data: 'Function executeMod did not return a valid result'
+            data: '${noDev ? 'Mod did not return a valid result' : 'Function executeMod did not return a valid result'}'
           }, '${window.location.origin}');
         }
       } else {
         console.log('executeMod function is not defined');
         parent.postMessage({
           type: '${ESandboxResultTypes.MOD_ERROR}',
-          data: 'executeMod function is not defined'
+          data: '${noDev ? 'Mod is not properly defined' : 'Function executeMod is not defined'}'
         }, '${window.location.origin}');
       }
     });

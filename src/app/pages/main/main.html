@@ -1,4 +1,4 @@
-<div class="size-full flex gap-4">
+<div class="size-full flex gap-4 overflow-auto min-h-0">
   <div class="h-full grow flex flex-col gap-4">
     <div class=" rounded-2xl w-full">
       <p-fieldset legend="Options" styleClass="main-bg-color -mt-5 rounded-2xl" class="h-full">
@@ -7,8 +7,8 @@
         }
       </p-fieldset>
     </div>
-    <div class="w-full grow shrink-0 flex-1 min-h-0 flex gap-4">
-      <div class="rounded-2xl w-full grow shrink-0 flex-1 min-h-0">
+    <div class="w-full grow min-h-0 flex gap-4 h-full">
+      <div class="rounded-2xl grow h-full min-h-0 w-1/2 min-w-0">
         <p-fieldset legend="Input(s)" styleClass="main-bg-color -mt-5 rounded-2xl h-full w-full min-w-0 min-h-0"
           class="h-full block">
           <div class="flex flex-col gap-2 h-full overflow-auto pr-1">
@@ -20,12 +20,12 @@
           </div>
         </p-fieldset>
       </div>
-      <div class="rounded-2xl w-full grow shrink-0 flex-1 min-h-0">
+      <div class="rounded-2xl grow min-h-0 w-1/2 min-w-0">
         <p-fieldset legend="Result" styleClass="main-bg-color -mt-5 rounded-2xl h-full w-full min-w-0 min-h-0"
           class="h-full block">
           <div class="size-full">
             <textarea class="w-full h-full min-w-0 rounded-2xl overflow-clip border border-primary/20"
-            placeholder="Result will be shown here" readonly></textarea>
+            placeholder="Result will be shown here" readonly [value]="result()"></textarea>
           </div>
         </p-fieldset>
       </div>
@@ -39,3 +39,19 @@
     </p-fieldset>
   </div>
 </div>
+
+<p-dialog header="Mod Execution Failed" [modal]="true" [(visible)]="modErrDialogConfig().visible" [closable]="true"
+  [dismissableMask]="true" [style]="{ width: 'auto', minWidth: '36rem', maxWidth: '90vw' }">
+  <div class="w-full">
+    <p
+      class="text-base font-semibold mb-2 text-red-500 border border-red-500/50 bg-red-950/30 p-6 rounded-lg flex gap-4 items-start">
+      <span class="material-symbols-outlined">
+        error
+      </span>
+      Error: {{ modErrDialogConfig().error }}
+    </p>
+  </div>
+  <div class="flex justify-end gap-2 mt-4">
+    <p-button label="Close" severity="secondary" (click)="closeErrorDialog()" />
+  </div>
+</p-dialog>

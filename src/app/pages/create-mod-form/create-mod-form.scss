@@ -10,6 +10,11 @@
     .readonly-decoration {
       background-color: rgba(255, 255, 255, 0.08);
     }
+
+    .p-confirmpopup-message {
+      white-space: pre-line;
+      line-height: 1.5;
+    }
   }
 
   .err-msg {

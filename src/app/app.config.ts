@@ -7,6 +7,7 @@ import { providePrimeNG } from 'primeng/config';
 import { clipModsPreset } from './clipMods.theme';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { setMonacoTheme } from './editor-theme';
+import { ConfirmationService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,6 +31,7 @@ export const appConfig: ApplicationConfig = {
       onMonacoLoad: () => {
         setMonacoTheme();
       },
-    }))
+    })),
+    ConfirmationService
   ]
 };

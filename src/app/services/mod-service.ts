@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { PocketbaseService } from './pocketbase-service';
 import { CollectionNames } from '../enums/collection-names';
 import { Mod } from '../models/mod.model';
@@ -12,6 +12,7 @@ export class ModService {
   private readonly pbService = inject(PocketbaseService);
 
   public triggerModWithId$ = new Subject<string>();
+  public currentInputLength = signal(0);
 
   createMod(mod: Mod) {
     return this.pbService.getPocketBaseInstance()

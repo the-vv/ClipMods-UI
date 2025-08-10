@@ -19,18 +19,21 @@ import { ModEngine } from '../../services/mod-engine';
 import { DrawerModule } from 'primeng/drawer';
 import { DialogModule } from 'primeng/dialog';
 import { Mod } from '../../models/mod.model';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'create-mod-form',
   templateUrl: 'create-mod-form.html',
-  imports: [FieldsetModule, ButtonModule, DrawerModule, SelectButtonModule, DialogModule, TextareaModule, InputTextModule, MessageModule, MonacoEditorModule, FormsModule, InputNumberModule, ReactiveFormsModule],
+  imports: [FieldsetModule, ButtonModule, DrawerModule, ConfirmDialogModule, SelectButtonModule, DialogModule, TextareaModule, InputTextModule, MessageModule, MonacoEditorModule, FormsModule, InputNumberModule, ReactiveFormsModule],
   styleUrls: ['./create-mod-form.scss']
 })
 export class CreateModForm implements OnInit {
 
   private readonly modService = inject(ModService);
-  private readonly router= inject(Router);
+  private readonly router = inject(Router);
   private readonly modEngineService = inject(ModEngine);
+  private readonly confirmationService = inject(ConfirmationService);
 
   modForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -112,7 +115,7 @@ export class CreateModForm implements OnInit {
   setReadonlyColors(editorInstance: any) {
     const monaco = (window as any).monaco;
     editorInstance.deltaDecorations([], [{
-      range: new monaco.Range(1,1, 18, 1),
+      range: new monaco.Range(1, 1, 18, 1),
       options: {
         isWholeLine: true,
         className: 'readonly-decoration',
@@ -144,7 +147,11 @@ export class CreateModForm implements OnInit {
     }
   }
 
-  onSave() {
+  async onSave(event: Event) {
+    if (!this.modTestSidebarConfig().runSuccess) {
+      Toaster.showError('Please run the mod successfully before saving.');
+      return;
+    }
     const mod: Mod = {
       name: this.modForm.value.name || '',
       description: this.modForm.value.description || '',
@@ -152,6 +159,12 @@ export class CreateModForm implements OnInit {
       isPublic: !this.modForm.value.private,
       inputCount: this.modForm.value.inputCount || 1,
       version: 1
+    }
+    if (!this.modForm.value.private) {
+      const confirmed = await this.confirmPublic(event);
+      if (!confirmed) {
+        return;
+      }
     }
     this.modService.createMod(mod).then(() => {
       Toaster.showSuccess('Mod created successfully!');
@@ -171,7 +184,7 @@ export class CreateModForm implements OnInit {
       this.modForm.value.code!,
       this.modTestSidebarConfig().args || [] // Use the args from the sidebar config
     ).then((res: string) => {
-      Toaster.showSuccess('Mod executed successfully!');
+      Toaster.showSuccess('Mod executed successfully!, You can save it now.');
       this.modTestSidebarConfig.set({
         ...this.modTestSidebarConfig(),
         output: res,
@@ -196,6 +209,32 @@ export class CreateModForm implements OnInit {
       ...this.modErrDialogConfig(),
       visible: false,
       // error: ''
+    });
+  }
+
+  confirmPublic(event: Event) {
+    return new Promise<boolean>((resolve) => {
+      this.confirmationService.confirm({
+        target: event.currentTarget as EventTarget,
+        message: `Public mods will need to be approved by the moderators before they are visible to others. You can use it privately until then.
+          \nAre you sure you want to continue?`,
+        // icon: 'pi pi-exclamation-triangle',
+        rejectButtonProps: {
+          label: 'Cancel',
+          severity: 'secondary',
+          outlined: true
+        },
+        acceptButtonProps: {
+          label: 'Save'
+        },
+        header: 'Confirm Public Mod',
+        accept: () => {
+          resolve(true);
+        },
+        reject: () => {
+          resolve(false);
+        }
+      });
     });
   }
 }

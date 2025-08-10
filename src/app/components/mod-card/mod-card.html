@@ -6,8 +6,10 @@
         appendTo="body" [showDelay]="500">
         <span class="material-symbols-outlined">code</span>
       </p-button>
-      <p-button size="small" severity="success" variant="outlined" pTooltip="Run Mod" tooltipPosition="top"
-        appendTo="body" [showDelay]="500">
+      <p-button size="small" severity="success" variant="outlined"
+        appendTo="body" [showDelay]="500" (onClick)="runMod()" tooltipPosition="left"
+          [pTooltip]="modService.currentInputLength() !== modData().inputCount ? 'Input count does not match' : 'Run Mod'"
+          [disabled]="modService.currentInputLength() !== modData().inputCount">
         <span class="material-symbols-outlined">play_arrow</span>
       </p-button>
     </div>

@@ -20,11 +20,11 @@ export class ModEngine {
     this.sandBoxRef = iframeElement;
   }
 
-  runJsCode(code: string, inputs: string[]) {
+  runJsCode(code: string, inputs: string[], noDev = false) {
     return new Promise<string>((resolve, reject) => {
       if (!this.sandBoxRef) {
         console.log('Sandbox not initialized');
-        return reject(new Error('Sandbox not initialized'));
+        return reject(new Error('Mod not initialized'));
       }
       this.sandBoxRef.onerror = (error) => {
         console.log('Error loading sandbox:', error);
@@ -32,7 +32,7 @@ export class ModEngine {
         reject(error);
       };
       const timer = setTimeout(() => {
-        reject(new Error('Sandbox execution timed out'));
+        reject(new Error('Mod execution timed out'));
         this.cleanup();
       }, 5000); // Wait for the script to execute
       fromEvent<MessageEvent>(window, 'message').pipe(takeUntil(this.stopListening$), take(1)).subscribe((e) => {
@@ -53,7 +53,7 @@ export class ModEngine {
       this.sandBoxRef.srcdoc = `
         <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/date-fns@4.1.0/cdn.min.js"></script>
-        <script>${getJsRunnerCode(code, inputs)}</script>
+        <script>${getJsRunnerCode(code, inputs, noDev)}</script>
       `;
       this.commonService.setLoading(true);
       this.modIsRunning$.next(true);

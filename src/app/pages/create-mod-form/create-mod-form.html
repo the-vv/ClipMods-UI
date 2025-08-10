@@ -66,15 +66,15 @@
           <p-button label="Run Mod" (click)="runMod()" variant="outlined"
             [disabled]="!modForm.valid || !modTestSidebarConfig().inputs">
           </p-button>
-          <p-button label="Save Mod" (click)="onSave()" [disabled]="!modTestSidebarConfig().runSuccess">
+          <p-button label="Save Mod" (click)="onSave($event)" [disabled]="!modTestSidebarConfig().runSuccess">
           </p-button>
         </div>
       </div>
     </p-fieldset>
-    <div class="h-full flex gap-6 overflow-auto">
-      <div class="grow flex flex-col gap-2 pt-2 w-[50%]">
+    <div class="h-full flex gap-6 overflow-y-auto pt-2">
+      <div class="grow flex flex-col gap-2 w-[50%] h-full overflow-y-auto">
         @for (i of getIterableOf(modTestSidebarConfig().inputs); track $index) {
-          <p-fieldset [legend]="'Input ' + ($index + 1)" styleClass="main-bg-color rounded-2xl h-full"
+          <p-fieldset [legend]="'Input ' + ($index + 1)" styleClass="main-bg-color rounded-2xl h-full min-w-0"
             class="h-full w-full grow block min-w-0">
             <ngx-monaco-editor [options]="plainTextOptions"
               class="w-full h-full grow min-h-[25vh] min-w-0 rounded-2xl overflow-clip" style="height: 100%; width: 100%;"
@@ -82,7 +82,7 @@
           </p-fieldset>
         }
       </div>
-      <div class="grow flex flex-col gap-2 pt-2 w-[50%] h-full">
+      <div class="grow flex flex-col gap-2 w-[50%] h-full">
         <p-fieldset [legend]="'Output'" styleClass="main-bg-color rounded-2xl h-full block"
           class="h-full w-full grow block min-w-0">
           <ngx-monaco-editor [options]="plainTextOptionsWithReadonly" (onInit)="setReadonly($event)"
@@ -108,3 +108,12 @@
     <p-button label="Close" severity="secondary" (click)="closeErrorDialog()" />
   </div>
 </p-dialog>
+
+<p-confirmdialog>
+  <ng-template #message let-message>
+    <div class="flex flex-col items-center w-full gap-4">
+      <!-- <i [ngClass]="message.icon" class="!text-6xl text-primary-500"></i> -->
+      <p class="whitespace-pre-line max-w-[560px]">{{ message.message }}</p>
+    </div>
+  </ng-template>
+</p-confirmdialog>
