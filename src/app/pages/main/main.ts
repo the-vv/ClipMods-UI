@@ -5,7 +5,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { themeName } from '../../editor-theme';
 import { ModsContainer } from "../../components/mods-container/mods-container";
-import { ModRunOptions } from '../../models/mod-run-options.model';
+import { globalModRunOptions, ModRunOptions } from '../../models/mod-run-options.model';
 import { FormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { ModService } from '../../services/mod-service';
@@ -43,7 +43,7 @@ export class Main {
     visible: false,
     error: ''
   })
-  modRunOptions: ModRunOptions = new ModRunOptions();
+  modRunOptions: ModRunOptions = globalModRunOptions;
   inputArgs = signal<string[]>(['']);
   result = signal<string>('');
 

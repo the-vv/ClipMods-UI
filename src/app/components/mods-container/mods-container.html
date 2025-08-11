@@ -3,7 +3,7 @@
     <p-selectbutton [options]="stateOptions" [(ngModel)]="selectedTabIndex" optionLabel="label" optionValue="value"
       aria-labelledby="basic" [allowEmpty]="false" />
     <p-button severity="primary" size="small" variant="outlined"
-      class="shrink-0 ml-auto" routerLink="/create-mod">
+      class="shrink-0 ml-auto" (onClick)="onCreate()">
       <span class="material-symbols-outlined">add</span>
       Create
     </p-button>
@@ -51,3 +51,5 @@
     </p-tabpanels>
   </p-tabs>
 </div>
+
+<p-confirmdialog />

@@ -1,6 +1,6 @@
 import { ESandboxResultTypes } from "../enums/mod-results.enum";
 
-export function getJsRunnerCode(jsCode: string, inputs: string[], noDev: boolean): string {
+export function getJsRunnerCode(jsCode: string, inputs: string[], multiline: boolean, noDev: boolean): string {
   return `
   try {
     ${jsCode}
@@ -14,7 +14,23 @@ export function getJsRunnerCode(jsCode: string, inputs: string[], noDev: boolean
         };
         let result = null;
         try {
-          result = executeMod(inputs, utilsObject);
+          if (${multiline}) {
+            // split inputs by newline and execute the mod code for each line
+            const splitArgs = inputs.map((input, index) => input.split('\\n'));
+            const maxLength = Math.max(...splitArgs.map(arr => arr.length));
+            const results = [];
+            console.log('Executing mod code with inputs:', splitArgs);
+            for (let i = 0; i < maxLength; i++) {
+              const args = splitArgs.map(arr => arr[i] || '');
+              const res = executeMod(args, utilsObject);
+              if (res && res.result) {
+                results.push(res.result);
+              }
+            }
+            result = { result: results.join('\\n') };
+          } else {
+            result = executeMod(inputs, utilsObject);
+          }
         } catch (error) {
           console.log('Error executing mod code:', error);
           parent.postMessage({

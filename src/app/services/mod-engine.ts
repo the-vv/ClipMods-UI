@@ -3,6 +3,7 @@ import { getJsRunnerCode } from '../constants/js-runner-code';
 import { ESandboxResultTypes } from '../enums/mod-results.enum';
 import { BehaviorSubject, fromEvent, Subject, Subscription, take, takeUntil } from 'rxjs';
 import { CommonService } from './common-service';
+import { globalModRunOptions } from '../models/mod-run-options.model';
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +54,7 @@ export class ModEngine {
       this.sandBoxRef.srcdoc = `
         <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/date-fns@4.1.0/cdn.min.js"></script>
-        <script>${getJsRunnerCode(code, inputs, noDev)}</script>
+        <script>${getJsRunnerCode(code, inputs, globalModRunOptions.multipleMode(), noDev)}</script>
       `;
       this.commonService.setLoading(true);
       this.modIsRunning$.next(true);

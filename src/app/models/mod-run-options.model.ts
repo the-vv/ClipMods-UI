@@ -5,3 +5,5 @@ export class ModRunOptions {
   autoCopy = signal(true);
   inputCount = signal(1);
 }
+
+export const globalModRunOptions = new ModRunOptions();
