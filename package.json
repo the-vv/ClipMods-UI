@@ -1,12 +1,13 @@
 {
   "name": "clip-mods",
-  "version": "0.0.0",
+  "version": "0.1.0-beta",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --o --port=4300",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "versioning": "node ./scripts/versioning.js"
   },
   "prettier": {
     "overrides": [

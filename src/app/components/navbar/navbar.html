@@ -2,8 +2,13 @@
   <ng-template #start>
     <div class="flex items-center gap-2 hover:cursor-pointer hover: rounded-xl" routerLink="/">
       <img src="/clipMods.png" alt="Logo" class="h-8 w-8" />
-      <span class="text-xl font-semibold ml-2 mr-4">
+      <span class="text-xl font-semibold ml-2 mr-4 flex flex-col justify-end items-end gap-1 relative">
         ClipMods
+        @if (currentVersion()) {
+          <sub class="text-xs text-primary/50 absolute -bottom-2.5 -right-7">
+            v{{ currentVersion() }}
+          </sub>
+        }
       </span>
       <!-- <p-button label="Files" text plain />
       <p-button label="Edit" text plain />

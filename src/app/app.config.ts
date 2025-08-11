@@ -8,6 +8,7 @@ import { clipModsPreset } from './clipMods.theme';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { setMonacoTheme } from './editor-theme';
 import { ConfirmationService } from 'primeng/api';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideAnimationsAsync(),
+    provideHttpClient(),
     providePrimeNG({
       theme: {
         preset: clipModsPreset,
