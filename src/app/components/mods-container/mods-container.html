@@ -18,9 +18,17 @@
               class="w-full rounded-xl border-primary/20 focus:border-primary" />
           </div>
           <div class="flex flex-col gap-2 h-full overflow-auto grow">
-            <!-- @for (mod of myModList(); track mod.id) {
-              <app-mod-card [modData]="mod" />
-            } -->
+            <div class="size-full flex items-center justify-center h-full flex-col gap-4">
+              <span class="material-symbols-outlined text-[100px]! text-primary/50">
+                history
+              </span>
+              <span class="text-2xl text-primary/50 text-center">
+                Nothing yet! <br>
+                <small class="text-primary/30">
+                  Start running mods to see your recent activity here.
+                </small>
+              </span>
+            </div>
           </div>
         </div>
       </p-tabpanel>

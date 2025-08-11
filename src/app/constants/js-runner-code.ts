@@ -19,7 +19,6 @@ export function getJsRunnerCode(jsCode: string, inputs: string[], multiline: boo
             const splitArgs = inputs.map((input, index) => input.split('\\n'));
             const maxLength = Math.max(...splitArgs.map(arr => arr.length));
             const results = [];
-            console.log('Executing mod code with inputs:', splitArgs);
             for (let i = 0; i < maxLength; i++) {
               const args = splitArgs.map(arr => arr[i] || '');
               const res = executeMod(args, utilsObject);

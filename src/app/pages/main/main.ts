@@ -7,7 +7,7 @@ import { themeName } from '../../editor-theme';
 import { ModsContainer } from "../../components/mods-container/mods-container";
 import { globalModRunOptions, ModRunOptions } from '../../models/mod-run-options.model';
 import { FormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { ModService } from '../../services/mod-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ModEngine } from '../../services/mod-engine';
@@ -15,10 +15,11 @@ import { Toaster } from '../../classes/toster';
 import { Dialog } from "primeng/dialog";
 import { Button } from "primeng/button";
 import { CommonService } from '../../services/common-service';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-main',
-  imports: [FieldsetModule, PasteOptions, TextareaModule, MonacoEditorModule, ModsContainer, FormsModule, NgClass, Dialog, Button],
+  imports: [FieldsetModule, AsyncPipe, TooltipModule, PasteOptions, TextareaModule, MonacoEditorModule, ModsContainer, FormsModule, NgClass, Dialog, Button],
   templateUrl: './main.html',
   styleUrl: './main.scss'
 })
@@ -46,6 +47,10 @@ export class Main {
   modRunOptions: ModRunOptions = globalModRunOptions;
   inputArgs = signal<string[]>(['']);
   result = signal<string>('');
+
+  get modSummary$() {
+    return this.modEngineService.modRunningSummary$;
+  }
 
   constructor() {
     effect(() => {
@@ -120,5 +125,14 @@ export class Main {
     } else {
       Toaster.showSuccess('Mod executed successfully');
     }
+  }
+
+  copyResultToClipboard() {
+    navigator.clipboard.writeText(this.result()).then(() => {
+      Toaster.showSuccess('Result copied to clipboard');
+    }).catch(err => {
+      console.error('Failed to copy result:', err);
+      Toaster.showError('Failed to copy result to clipboard');
+    });
   }
 }
