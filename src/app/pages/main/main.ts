@@ -64,7 +64,7 @@ export class Main {
         return;
       }
       this.commonService.setLoading(true);
-      this.modService.getModelById(modId).then(mod => {
+      this.modService.getModById(modId).then(mod => {
         this.commonService.setLoading(false);
         this.modEngineService.runJsCode(mod.code, this.inputArgs(), true).then(result => {
           this.modResult(result);

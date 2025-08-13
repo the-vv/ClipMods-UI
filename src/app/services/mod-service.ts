@@ -19,7 +19,7 @@ export class ModService {
       .collection(CollectionNames.Mods).create(mod);
   }
 
-  getModelById(modId: string): Promise<Mod> {
+  getModById(modId: string): Promise<Mod> {
     return this.pbService.getPocketBaseInstance()
       .collection(CollectionNames.Mods)
       .getOne<Mod>(modId, {
