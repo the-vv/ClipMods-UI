@@ -1,4 +1,4 @@
-import { Component, inject, model, OnInit, signal } from '@angular/core';
+import { Component, inject, model, OnInit, resource, signal } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
 import { Mod } from '../../models/mod.model';
 import { ModCard } from "../mod-card/mod-card";
@@ -13,6 +13,7 @@ import { ModService } from '../../services/mod-service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { PocketbaseService } from '../../services/pocketbase-service';
+import { Recent } from '../../models/recents.mode';
 
 @Component({
   selector: 'app-mods-container',
@@ -27,6 +28,29 @@ export class ModsContainer implements OnInit {
   private readonly router = inject(Router);
   private readonly pocketbaseService = inject(PocketbaseService);
 
+  protected readonly publicListParams = {
+    page: signal(1),
+    perPage: signal(10),
+    searchStr: signal('')
+  }
+
+  publicResource = resource({
+    params: () => ({
+      page: this.publicListParams.page(),
+      perPage: this.publicListParams.perPage(),
+      searchStr: this.publicListParams.searchStr()
+    }),
+    loader: (param) => {
+      return this.modService.getPublicMods(param.params.page, param.params.perPage, param.params.searchStr);
+    }
+  })
+
+  myModResource = resource({
+    loader: () => {
+      return this.modService.getMyMods();
+    }
+  })
+
   openedCreateModDrawer = model(false);
   stateOptions: any[] = [
     { label: 'Recent', value: 0 },
@@ -35,19 +59,20 @@ export class ModsContainer implements OnInit {
   ];
   selectedTabIndex = signal(0);
   searchString = model('');
-  myModList = signal<Mod[]>([]);
+  recentMods = signal<Mod[]>([]);
 
   ngOnInit(): void {
-    this.loadMyMods();
+    // this.loadMyMods();
+    this.getRecentMods();
   }
 
-  loadMyMods() {
-    this.modService.getMyMods().then(mods => {
-      this.myModList.set(mods);
-    }).catch(error => {
-      console.error('Error loading mods:', error);
-    });
-  }
+  // loadMyMods() {
+  //   this.modService.getMyMods().then(mods => {
+  //     this.myModList.set(mods);
+  //   }).catch(error => {
+  //     console.error('Error loading mods:', error);
+  //   });
+  // }
 
   onCreate() {
     if (this.pocketbaseService.isLoggedIn()) {
@@ -66,5 +91,13 @@ export class ModsContainer implements OnInit {
         }
       });
     }
+  }
+
+  getRecentMods() {
+    this.modService.getRecents().then(mods => {
+      this.recentMods.set(mods);
+    }).catch(error => {
+      console.error('Error loading recent mods:', error);
+    });
   }
 }

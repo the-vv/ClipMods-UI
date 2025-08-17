@@ -24,7 +24,7 @@
         <p-fieldset legend="Result" styleClass="main-bg-color -mt-5 rounded-2xl h-full w-full min-w-0 min-h-0"
           class="h-full block">
           <div class="size-full">
-            <textarea class="w-full h-full min-w-0 rounded-2xl overflow-clip border border-primary/20"
+            <textarea class="w-full h-full min-w-0 rounded-2xl border border-primary/20"
             placeholder="Result will be shown here" readonly [value]="result()"></textarea>
           </div>
         </p-fieldset>
@@ -73,7 +73,7 @@
   [dismissableMask]="true" [style]="{ width: 'auto', minWidth: '36rem', maxWidth: '90vw' }">
   <div class="w-full">
     <p
-      class="text-base font-semibold mb-2 text-red-500 border border-red-500/50 bg-red-950/30 p-6 rounded-lg flex gap-4 items-start">
+      class="text-base font-semibold mb-2 text-red-500 border border-red-500/50 bg-red-950/30 p-6 rounded-lg flex gap-4 items-start max-w-2xl">
       <span class="material-symbols-outlined">
         error
       </span>

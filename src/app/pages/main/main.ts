@@ -68,6 +68,7 @@ export class Main {
         this.commonService.setLoading(false);
         this.modEngineService.runJsCode(mod.code, this.inputArgs(), true).then(result => {
           this.modResult(result);
+          this.modService.updateLastUsed(modId)
         }).catch(error => {
           this.commonService.setLoading(false);
           this.modErrDialogConfig.set({

@@ -18,9 +18,14 @@
   <p class="m-0 text-sm text-secondary opacity-50 -mt-0.5">{{modData().description}}</p>
   <div class="flex gap-2 opacity-50 mt-2">
     <small class="badge border border-primary/10"
-      [ngClass]="isMatchingInputCount() ? 'bg-green-500/30!' : 'bg-red-500/50!'"
-    >{{modData().inputCount}} Inputs</small>
+      [ngClass]="isMatchingInputCount() ? 'bg-green-500/30!' : 'bg-red-500/50!'">
+      {{modData().inputCount}} Inputs
+    </small>
     <small class="badge border border-primary/10">V{{modData().version}}</small>
-    <small class="badge border border-primary/10">Updated: {{modData().updated | date: 'd/M/yyyy h:mm a'}}</small>
+    @if (modData().lastUsed) {
+      <small class="badge border border-primary/10">Last Used: {{modData().lastUsed | date: 'd/M/yyyy h:mm a'}}</small>
+    } @else {
+      <small class="badge border border-primary/10">Updated: {{modData().updated | date: 'd/M/yyyy h:mm a'}}</small>
+    }
   </div>
 </div>

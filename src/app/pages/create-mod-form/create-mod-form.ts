@@ -52,17 +52,6 @@ export class CreateModForm implements OnInit {
     automaticLayout: true,
     minimap: { enabled: false },
   };
-  plainTextOptions = {
-    ...this.pasteEditorOptions,
-    language: 'plaintext',
-    scrollbar: {
-      alwaysConsumeMouseWheel: false
-    }
-  }
-  plainTextOptionsWithReadonly = {
-    ...this.plainTextOptions,
-    readOnly: true,
-  }
   modTestSidebarConfig = signal({
     visible: false,
     inputs: 0,
@@ -197,11 +186,6 @@ export class CreateModForm implements OnInit {
         error: error.message || 'An error occurred while executing the mod code'
       });
     });
-  }
-
-  setReadonly(editorInstance: any) {
-    const monaco = (window as any).monaco;
-    editorInstance.updateOptions({ readOnly: true });
   }
 
   closeErrorDialog() {

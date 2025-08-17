@@ -22,3 +22,11 @@
     font-size: 0.875rem;
   }
 }
+
+.mod-io {
+  padding: 12px;
+
+  &::placeholder {
+    opacity: 0.3;
+  }
+}

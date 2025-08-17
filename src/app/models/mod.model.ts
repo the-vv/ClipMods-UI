@@ -11,4 +11,5 @@ export interface Mod {
   isPublic: boolean;
   inputCount: number;
   publicApprovalStatus?: 'pending' | 'approved' | 'rejected' | null;
+  lastUsed?: Date;
 }

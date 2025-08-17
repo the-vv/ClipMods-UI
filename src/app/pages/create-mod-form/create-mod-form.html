@@ -12,7 +12,7 @@
             </div>
           </p-message>
           <div class="shrink-0 w-full flex border border-primary/20 rounded-xl p-3 gap-4">
-            <div class="flex gap-2 items-start flex-col">
+            <div class="flex gap-2 items-start flex-col w-2xs">
               <label for="name" class="text-sm required-label">Mod Name</label>
               <input id="name" type="text" pInputText formControlName="name" placeholder="Enter mod name"
                 class="w-full" />
@@ -73,21 +73,23 @@
     </p-fieldset>
     <div class="h-full flex gap-6 overflow-y-auto pt-2">
       <div class="grow flex flex-col gap-2 w-[50%] h-full overflow-y-auto">
-        @for (i of getIterableOf(modTestSidebarConfig().inputs); track $index) {
-          <p-fieldset [legend]="'Input ' + ($index + 1)" styleClass="main-bg-color rounded-2xl h-full min-w-0"
-            class="h-full w-full grow block min-w-0">
-            <ngx-monaco-editor [options]="plainTextOptions"
-              class="w-full h-full grow min-h-[25vh] min-w-0 rounded-2xl overflow-clip" style="height: 100%; width: 100%;"
-              [(ngModel)]="modTestSidebarConfig().args[$index]"></ngx-monaco-editor>
-          </p-fieldset>
-        }
+        <p-fieldset [legend]="'Input(s)'" styleClass="main-bg-color rounded-2xl h-full min-w-0"
+        class="h-full w-full grow block min-w-0">
+        <div class="size-full flex flex-col gap-4 overflow-auto">
+            @for (i of getIterableOf(modTestSidebarConfig().inputs); track $index) {
+              <textarea class="w-full h-full min-w-0 rounded-2xl border border-primary/20 mod-io"
+                style="height: 100%; width: 100%; min-height: 200px;"
+                [(ngModel)]="modTestSidebarConfig().args[$index]" placeholder="Input {{ $index + 1 }}"></textarea>
+            }
+          </div>
+        </p-fieldset>
       </div>
       <div class="grow flex flex-col gap-2 w-[50%] h-full">
         <p-fieldset [legend]="'Output'" styleClass="main-bg-color rounded-2xl h-full block"
           class="h-full w-full grow block min-w-0">
-          <ngx-monaco-editor [options]="plainTextOptionsWithReadonly" (onInit)="setReadonly($event)"
-            class="w-full h-full grow min-h-[25vh] min-w-0 rounded-2xl overflow-clip" style="height: 100%; width: 100%;"
-            [(ngModel)]="modTestSidebarConfig().output"></ngx-monaco-editor>
+          <textarea readonly placeholder="Result will be shown here"
+            class="w-full h-full min-w-0 rounded-2xl border border-primary/20 mod-io" style="height: 100%; width: 100%;"
+            [(ngModel)]="modTestSidebarConfig().output"></textarea>
         </p-fieldset>
       </div>
     </div>
@@ -97,7 +99,7 @@
 <p-dialog header="Mod Execution Failed" [modal]="true" [(visible)]="modErrDialogConfig().visible" [closable]="true"
   [dismissableMask]="true" [style]="{ width: 'auto', minWidth: '36rem', maxWidth: '90vw' }">
   <div class="w-full">
-    <p class="text-base font-semibold mb-2 text-red-500 border border-red-500/50 bg-red-950/30 p-6 rounded-lg flex gap-4 items-start">
+    <p class="text-base font-semibold mb-2 text-red-500 border border-red-500/50 bg-red-950/30 p-6 rounded-lg flex gap-4 items-start max-w-2xl">
       <span class="material-symbols-outlined">
         error
       </span>
@@ -111,7 +113,7 @@
 
 <p-confirmdialog>
   <ng-template #message let-message>
-    <div class="flex flex-col items-center w-full gap-4">
+    <div class="flex flex-col items-center w-full gap-4 pb-4 border-b border-primary/20">
       <!-- <i [ngClass]="message.icon" class="!text-6xl text-primary-500"></i> -->
       <p class="whitespace-pre-line max-w-[560px]">{{ message.message }}</p>
     </div>

@@ -18,17 +18,21 @@
               class="w-full rounded-xl border-primary/20 focus:border-primary" />
           </div>
           <div class="flex flex-col gap-2 h-full overflow-auto grow">
-            <div class="size-full flex items-center justify-center h-full flex-col gap-4">
-              <span class="material-symbols-outlined text-[100px]! text-primary/50">
-                history
-              </span>
-              <span class="text-2xl text-primary/50 text-center">
-                Nothing yet! <br>
-                <small class="text-primary/30">
-                  Start running mods to see your recent activity here.
-                </small>
-              </span>
-            </div>
+            @for (mod of recentMods(); track mod.id) {
+              <app-mod-card [modData]="mod" />
+            } @empty {
+              <div class="size-full flex items-center justify-center h-full flex-col gap-4">
+                <span class="material-symbols-outlined text-[100px]! text-primary/50">
+                  history
+                </span>
+                <span class="text-2xl text-primary/50 text-center">
+                  Nothing yet! <br>
+                  <small class="text-primary/30">
+                    Start running mods to see your recent activity here.
+                  </small>
+                </span>
+              </div>
+            }
           </div>
         </div>
       </p-tabpanel>
@@ -39,21 +43,45 @@
               class="w-full rounded-xl border-primary/20 focus:border-primary" />
           </div>
           <div class="flex flex-col gap-2 h-full overflow-auto grow">
-            @for (mod of myModList(); track mod.id) {
+            @for (mod of myModResource.value(); track mod.id) {
               <app-mod-card [modData]="mod" />
+            } @empty {
+              <div class="size-full flex items-center justify-center h-full flex-col gap-4">
+                <span class="material-symbols-outlined text-[100px]! text-primary/50">
+                  data_object
+                </span>
+                <span class="text-2xl text-primary/50 text-center">
+                  Nothing yet! <br>
+                  <small class="text-primary/30">
+                    Create your first mod to see it here.
+                  </small>
+                </span>
+              </div>
             }
           </div>
         </div>
       </p-tabpanel>
       <p-tabpanel [value]="2">
-        <div class="size-full flex items-center justify-center h-full flex-col gap-4">
-          <span class="material-symbols-outlined text-[100px]! text-primary/50">
-            upcoming
-          </span>
-          <span class="text-2xl text-primary/50 text-center">
-            Coming Soon! <br>
-            <small class="text-primary/30">Stay tuned for updates.</small>
-          </span>
+        <div class="h-full flex flex-col gap-2">
+          <div class="w-full shrink-0">
+            <input type="text" pInputText [(ngModel)]="searchString" placeholder="Search"
+              class="w-full rounded-xl border-primary/20 focus:border-primary" />
+          </div>
+          <div class="flex flex-col gap-2 h-full overflow-auto grow">
+            @for (mod of publicResource.value()?.items || []; track mod.id) {
+              <app-mod-card [modData]="mod" />
+            } @empty {
+              <div class="size-full flex items-center justify-center h-full flex-col gap-4">
+                <span class="material-symbols-outlined text-[100px]! text-primary/50">
+                  upcoming
+                </span>
+                <span class="text-2xl text-primary/50 text-center">
+                  Coming Soon! <br>
+                  <small class="text-primary/30">Stay tuned for updates.</small>
+                </span>
+              </div>
+            }
+          </div>
         </div>
       </p-tabpanel>
     </p-tabpanels>
