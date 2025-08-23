@@ -53,6 +53,10 @@ export class ModService {
             reject(new Error('Error fetching recent mods'));
             return;
           }
+          if (!res.items.length) {
+            resolve([]);
+            return;
+          }
           const ids = res.items.map(item => item.mod);
           const lastUsedById = new Map<string, Date>();
           res.items.forEach(item => {
