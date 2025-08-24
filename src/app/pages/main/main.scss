@@ -12,6 +12,8 @@
 
       .p-fieldset-content-container {
         flex-grow: 1;
+        flex-shrink: 1;
+        min-height: 0;
 
         .p-fieldset-content {
           height: 100%;

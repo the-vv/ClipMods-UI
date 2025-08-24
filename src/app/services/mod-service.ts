@@ -15,6 +15,8 @@ export class ModService {
   public triggerModWithId$ = new Subject<string>();
   public currentInputLength = signal(0);
 
+  public readonly recentLimit = 10;
+
   createMod(mod: Mod) {
     return this.pbService.getPocketBaseInstance()
       .collection(CollectionNames.Mods).create(mod);
@@ -29,17 +31,18 @@ export class ModService {
   }
 
   getMyMods(search?: string): Promise<Mod[]> {
+    const filterString = search ? `name ~ "${search}" || description ~ "${search}"` : undefined;
     return this.pbService.getPocketBaseInstance()
       .collection(CollectionNames.Mods)
       .getFullList<Mod>(999, {
-        filter: `createdBy = "${this.pbService.getCurrentUser()?.id}"`,
+        filter: `createdBy = "${this.pbService.getCurrentUser()?.id}" ${filterString ? `&& (${filterString})` : ''}`,
         sort: '-updated',
         fields: 'id,name,description,version,inputCount,isPublic,updated',
         requestKey: 'my-mods'
       });
   }
 
-  getRecents(recentCount = 10) {
+  getRecents(recentCount = this.recentLimit) {
     return new Promise<Mod[]>((resolve, reject) => {
       this.pbService.getPocketBaseInstance()
         .collection(CollectionNames.Recents)

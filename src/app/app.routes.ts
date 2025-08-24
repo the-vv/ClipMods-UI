@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   {
@@ -15,6 +16,7 @@ export const routes: Routes = [
       },
       {
         path: 'create-mod',
+        canActivate: [authGuard],
         loadComponent: () => import('./pages/create-mod-form/create-mod-form').then(m => m.CreateModForm),
       }
     ]

@@ -19,7 +19,7 @@
   <ng-template #end>
     <div class="flex items-center gap-2">
       @if (isLoggedIn) {
-        <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+        <p-avatar image="/user.png" class="cursor-pointer hover:scale-105 transition-transform" (click)="menu.toggle($event)"
           [style]="{ width: '32px', height: '32px' }" />
       } @else {
         <p-button size="small" severity="secondary" routerLink="/auth">
@@ -30,3 +30,15 @@
   </div>
     </ng-template>
 </p-toolbar>
+
+<p-menu #menu [model]="menuItems" [popup]="true" appendTo="body">
+  <ng-template #start>
+    <div
+      class="relative overflow-hidden w-full border-0 bg-transparent p-2 rounded-none gap-1 flex items-center">
+      <p-avatar image="/user.png" class="mr-2" shape="circle" />
+      <span class="inline-flex flex-col">
+        <span class="font-bold">{{pocketbaseService.getCurrentUser()?.['name']}}</span>
+      </span>
+    </div>
+  </ng-template>
+</p-menu>

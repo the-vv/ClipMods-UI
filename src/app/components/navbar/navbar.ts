@@ -3,19 +3,31 @@ import { ButtonModule } from 'primeng/button';
 import { ToolbarModule } from 'primeng/toolbar';
 import { AvatarModule } from 'primeng/avatar';
 import { PocketbaseService } from '../../services/pocketbase-service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonService } from '../../services/common-service';
+import { MenuModule } from 'primeng/menu';
 
 @Component({
   selector: 'app-navbar',
-  imports: [ToolbarModule, ButtonModule, AvatarModule, RouterLink],
+  imports: [ToolbarModule, ButtonModule, AvatarModule, RouterLink, MenuModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss'
 })
 export class Navbar implements OnInit {
 
-  private readonly pocketbaseService = inject(PocketbaseService);
+  protected readonly pocketbaseService = inject(PocketbaseService);
   private readonly commonService = inject(CommonService);
+  private readonly router = inject(Router);
+  menuItems = [
+    {
+      label: 'Logout',
+      icon: 'pi pi-sign-out',
+      command: () => {
+        this.pocketbaseService.logout();
+        this.router.navigate(['/auth']);
+      }
+    },
+  ];
 
   currentVersion = signal<string>('');
 

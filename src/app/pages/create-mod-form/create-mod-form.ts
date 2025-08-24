@@ -124,7 +124,7 @@ export class CreateModForm implements OnInit {
   onSubmit() {
     if (this.modForm.valid) {
       this.modTestSidebarConfig.set({
-        code: this.modForm.value.code || DEFAULT_MOD_CODE,
+        code: this.modForm.value.code!,
         inputs: this.modForm.value.inputCount || 1,
         visible: true,
         args: Array.from({ length: this.modForm.value.inputCount || 1 }, (_, i) => ``),
@@ -173,7 +173,7 @@ export class CreateModForm implements OnInit {
       this.modForm.value.code!,
       this.modTestSidebarConfig().args || [] // Use the args from the sidebar config
     ).then((res: string) => {
-      Toaster.showSuccess('Mod executed successfully!, You can save it now.');
+      Toaster.showSuccess('Mod executed successfully, You can save it now.');
       this.modTestSidebarConfig.set({
         ...this.modTestSidebarConfig(),
         output: res,

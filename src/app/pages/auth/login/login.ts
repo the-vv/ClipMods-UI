@@ -38,6 +38,7 @@ export class Login {
       .then((res) => {
         console.log('Login successful', res);
         this.loading.set(false);
+        this.router.navigate(['/']);
       })
       .catch(error => {
         // Handle login error

@@ -31,39 +31,39 @@
       </div>
     </div>
   </div>
-  <div class="h-full w-[400px] flex flex-col gap-4">
+  <div class="h-full w-[400px] flex flex-col gap-4 min-h-0">
     @let summaryInfo = (modSummary$ | async);
     <p-fieldset legend="Summary" styleClass="main-bg-color rounded-2xl h-full min-w-0" class="block -mt-5">
-        @if (summaryInfo) {
-          <div class="flex justify-between items-start gap-4">
-            <div class="grow min-w-0 flex flex-col gap-1">
-              <p class="text-sm text-secondary opacity-75">
-                Last run was
-                <span [ngClass]="summaryInfo.success ? 'text-green-500' : 'text-red-500'">
-                  {{ summaryInfo.success ? 'Success' : 'Failed' }}
-                </span>
-              </p>
-              <p class="text-sm text-secondary opacity-75">
-                It took <span class="text-primary">{{ summaryInfo.duration }}</span>
-              </p>
-              @if (!summaryInfo.success) {
-                <p class="text-sm text-red-500">Error: {{ summaryInfo.error }}</p>
-              }
-            </div>
-            @if (result()) {
-              <div class="shrink-0" tooltipPosition="top" pTooltip="Copy Result" showDelay="500">
-                <p-button variant="outlined" icon="pi pi-copy" aria-label="Save"
-                  (onClick)="copyResultToClipboard()"/>
-              </div>
+      @if (summaryInfo) {
+        <div class="flex justify-between items-start gap-4">
+          <div class="grow min-w-0 flex flex-col gap-1">
+            <p class="text-sm text-secondary opacity-75">
+              Last run was
+              <span [ngClass]="summaryInfo.success ? 'text-green-500' : 'text-red-500'">
+                {{ summaryInfo.success ? 'Success' : 'Failed' }}
+              </span>
+            </p>
+            <p class="text-sm text-secondary opacity-75">
+              It took <span class="text-primary">{{ summaryInfo.duration }}</span>
+            </p>
+            @if (!summaryInfo.success) {
+              <p class="text-sm text-red-500">Error: {{ summaryInfo.error }}</p>
             }
           </div>
-        } @else {
-          <p class="text-sm text-secondary opacity-75">No mod has been run yet.</p>
-        }
-      </p-fieldset>
-    <p-fieldset legend="Mods" styleClass="main-bg-color -mt-5 rounded-2xl h-full min-w-0" class="h-full block">
+          @if (result()) {
+            <div class="shrink-0" tooltipPosition="top" pTooltip="Copy Result" showDelay="500">
+              <p-button variant="outlined" icon="pi pi-copy" aria-label="Save"
+                (onClick)="copyResultToClipboard()"/>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="text-sm text-secondary opacity-75">No mod has been ran yet.</p>
+      }
+    </p-fieldset>
+    <p-fieldset legend="Mods" styleClass="main-bg-color -mt-5 rounded-2xl grow min-w-0 min-h-0" class="h-full block min-h-0 [&_.p-fieldset]:h-full">
       @defer {
-        <app-mods-container class="w-full h-full block" />
+        <app-mods-container class="w-full h-full block min-h-0" />
       }
     </p-fieldset>
   </div>
@@ -84,3 +84,5 @@
     <p-button label="Close" severity="secondary" (click)="closeErrorDialog()" />
   </div>
 </p-dialog>
+
+<!-- a p-sidebar just with monaco editor for previewing a selcted code -->
