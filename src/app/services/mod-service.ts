@@ -89,6 +89,9 @@ export class ModService {
   }
 
   async updateLastUsed(modId: string) {
+    if (!this.pbService.isLoggedIn()) {
+      return;
+    }
     let recentItem: Recent | null = null;
     try {
       recentItem = await this.pbService.getPocketBaseInstance()
