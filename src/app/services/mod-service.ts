@@ -75,6 +75,9 @@ export class ModService {
               mods.forEach(mod => {
                 mod.lastUsed = lastUsedById.get(mod.id!);
               });
+              mods.sort((a, b) => {
+                return (b.lastUsed?.getTime() || 0) - (a.lastUsed?.getTime() || 0);
+              });
               resolve(mods);
             }).catch(err => {
               reject(err);
