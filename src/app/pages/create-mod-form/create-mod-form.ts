@@ -21,6 +21,7 @@ import { DialogModule } from 'primeng/dialog';
 import { Mod } from '../../models/mod.model';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { PocketbaseService } from '../../services/pocketbase-service';
 
 @Component({
   selector: 'create-mod-form',
@@ -34,6 +35,7 @@ export class CreateModForm implements OnInit {
   private readonly router = inject(Router);
   private readonly modEngineService = inject(ModEngine);
   private readonly confirmationService = inject(ConfirmationService);
+  private pocketbaseService = inject(PocketbaseService);
 
   modForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -147,7 +149,8 @@ export class CreateModForm implements OnInit {
       code: this.modForm.value.code!,
       isPublic: !this.modForm.value.private,
       inputCount: this.modForm.value.inputCount || 1,
-      version: 1
+      version: 1,
+      createdBy: this.pocketbaseService.getCurrentUser()?.['id']
     }
     if (!this.modForm.value.private) {
       const confirmed = await this.confirmPublic(event);
