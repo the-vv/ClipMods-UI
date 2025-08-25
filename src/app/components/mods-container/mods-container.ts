@@ -72,6 +72,9 @@ export class ModsContainer implements OnInit {
   myModSearchCtrl = new FormControl('');
 
   ngOnInit(): void {
+    if (!this.pocketbaseService.isLoggedIn()) {
+      this.selectedTabIndex.set(2);
+    }
     // this.loadMyMods();
     this.getRecentMods();
     this.myModSearchCtrl.valueChanges.pipe(

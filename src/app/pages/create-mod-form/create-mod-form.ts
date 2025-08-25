@@ -22,6 +22,7 @@ import { Mod } from '../../models/mod.model';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { PocketbaseService } from '../../services/pocketbase-service';
+import { CommonService } from '../../services/common-service';
 
 @Component({
   selector: 'create-mod-form',
@@ -35,7 +36,8 @@ export class CreateModForm implements OnInit {
   private readonly router = inject(Router);
   private readonly modEngineService = inject(ModEngine);
   private readonly confirmationService = inject(ConfirmationService);
-  private pocketbaseService = inject(PocketbaseService);
+  private readonly pocketbaseService = inject(PocketbaseService);
+  private readonly commonService = inject(CommonService);
 
   modForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -158,12 +160,15 @@ export class CreateModForm implements OnInit {
         return;
       }
     }
+    this.commonService.setLoading(true);
     this.modService.createMod(mod).then(() => {
       Toaster.showSuccess('Mod created successfully!');
       this.router.navigate(['/']);
     }).catch(error => {
       console.error('Error creating mod:', error);
       Toaster.showError('Failed to create mod. Please try again.');
+    }).finally(() => {
+      this.commonService.setLoading(false);
     });
   }
 
