@@ -163,7 +163,7 @@ export class CreateModForm implements OnInit {
     this.commonService.setLoading(true);
     this.modService.createMod(mod).then(() => {
       Toaster.showSuccess('Mod created successfully!');
-      this.router.navigate(['/']);
+      this.router.navigate(['/mods']);
     }).catch(error => {
       console.error('Error creating mod:', error);
       Toaster.showError('Failed to create mod. Please try again.');

@@ -12,6 +12,10 @@ export const routes: Routes = [
   },
   {
     path: '',
+    loadComponent: () => import('./pages/landing/landing').then(m => m.Landing),
+  },
+  {
+    path: 'mods',
     loadComponent: () => import('./pages/main-layout/main-layout').then(m => m.MainLayout),
     children: [
       {

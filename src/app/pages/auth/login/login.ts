@@ -38,7 +38,7 @@ export class Login {
       .then((res) => {
         console.log('Login successful', res);
         this.loading.set(false);
-        this.router.navigate(['/']);
+        this.router.navigate(['/mods']);
       })
       .catch(error => {
         // Handle login error
