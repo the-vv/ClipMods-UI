@@ -36,4 +36,16 @@ export class PocketbaseService {
   login(email: string, password: string) {
     return this.pb.collection('users').authWithPassword(email, password);
   }
+
+  async register(name: string, email: string, password: string) {
+    const data = {
+      email,
+      emailVisibility: true,
+      name,
+      password,
+      passwordConfirm: password
+    };
+
+    const record = await this.pb.collection('users').create(data);
+  }
 }

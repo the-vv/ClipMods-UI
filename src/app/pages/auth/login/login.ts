@@ -4,12 +4,12 @@ import { ButtonModule } from 'primeng/button';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PocketbaseService } from '../../../services/pocketbase-service';
 import { MessageModule } from 'primeng/message';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-login',
-  imports: [InputTextModule, ButtonModule, ReactiveFormsModule, MessageModule],
+  imports: [InputTextModule, RouterLink, ButtonModule, ReactiveFormsModule, MessageModule],
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
