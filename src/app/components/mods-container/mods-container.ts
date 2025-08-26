@@ -105,7 +105,7 @@ export class ModsContainer implements OnInit {
 
   onCreate() {
     if (this.pocketbaseService.isLoggedIn()) {
-      this.router.navigate(['/create-mod']);
+      this.router.navigate(['/mods/create-mod']);
     } else {
       this.confirmationService.confirm({
         message: 'Login is required to create a mod. Do you want to login now?',
