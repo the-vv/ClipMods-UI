@@ -1,3 +1,7 @@
+@if (isLoadingPage()) {
+  <p-progressbar mode="indeterminate" [style]="{ height: '3px' }"
+    class="absolute top-0 left-0 right-0 w-full" />
+}
 <router-outlet></router-outlet>
 <iframe #sandbox sandbox="allow-scripts" style="display:none;"></iframe>
 <p-blockUI [blocked]="commonService.isLoading()">
