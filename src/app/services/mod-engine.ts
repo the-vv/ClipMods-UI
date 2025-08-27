@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { getJsRunnerCode } from '../constants/js-runner-code';
 import { ESandboxResultTypes } from '../enums/mod-results.enum';
-import { BehaviorSubject, fromEvent, Subject, Subscription, take, takeUntil } from 'rxjs';
+import { BehaviorSubject, filter, fromEvent, Subject, Subscription, take, takeUntil } from 'rxjs';
 import { CommonService } from './common-service';
 import { globalModRunOptions } from '../models/mod-run-options.model';
 
@@ -48,7 +48,11 @@ export class ModEngine {
           this.setModRunSummary(false, 'Mod execution timed out');
         }
       }, 5000); // Wait for the script to execute
-      fromEvent<MessageEvent>(window, 'message').pipe(takeUntil(this.stopListening$), take(1)).subscribe((e) => {
+      fromEvent<MessageEvent>(window, 'message').pipe(
+        takeUntil(this.stopListening$),
+        filter(e => !!e?.data?.type),
+        take(1)
+      ).subscribe((e) => {
         console.log("Sandboxed return:", e.data);
         if (!e.data || !e.data.type) return;
         if (e.data.type === ESandboxResultTypes.MOD_RESULT) {
