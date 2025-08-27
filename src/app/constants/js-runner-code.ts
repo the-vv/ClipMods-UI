@@ -2,10 +2,10 @@ import { ESandboxResultTypes } from "../enums/mod-results.enum";
 
 export function getJsRunnerCode(jsCode: string, inputs: string[], multiline: boolean, noDev: boolean): string {
   return `
+  ${jsCode}
   try {
-    ${jsCode}
     document.addEventListener("DOMContentLoaded", function() {
-      const inputs = ${JSON.stringify(inputs)};
+      const inputs = ${JSON.stringify(getSanitizedInputs(inputs))};
       if (typeof executeMod === 'function') {
         // Call the executeMod function with inputs
         const utilsObject = {
@@ -67,4 +67,10 @@ export function getJsRunnerCode(jsCode: string, inputs: string[], multiline: boo
     }, '${window.location.origin}');
   }
 `;
+}
+
+function getSanitizedInputs(inputs: string[]): string[] {
+  return inputs.map(i =>
+    i.replace(/<\/script/gi, "<\\/script")
+  )
 }

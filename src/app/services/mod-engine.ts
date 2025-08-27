@@ -95,7 +95,7 @@ export class ModEngine {
   }
 
   cleanup() {
-    this.killSandBox();
+    // this.killSandBox();
     this.stopListening$.next();
     this.commonService.setLoading(false);
     this.modIsRunning$.next(false);

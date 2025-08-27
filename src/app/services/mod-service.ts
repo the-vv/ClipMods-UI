@@ -120,7 +120,7 @@ export class ModService {
     return this.pbService.getPocketBaseInstance()
       .collection(CollectionNames.Mods)
       .getList<Mod>(page, perPage, {
-        filter: `isPublic = true ${searchQuery ? `&& (${searchQuery})` : ''}`,
+        filter: `isPublic = true && publicApprovalStatus = 'approved' ${searchQuery ? `&& (${searchQuery})` : ''}`,
         sort: '-updated',
         fields: 'id,name,description,version,inputCount,isPublic,updated',
         requestKey: 'public-mods'
