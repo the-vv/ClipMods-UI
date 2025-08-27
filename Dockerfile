@@ -7,6 +7,9 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
+
+RUN npm run versioning
+
 RUN npm run build
 
 # Stage 2: Serve the app with a lightweight web server

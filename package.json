@@ -1,6 +1,6 @@
 {
   "name": "clip-mods",
-  "version": "0.1.0-beta",
+  "version": "0.1.2-beta",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --o --port=4300",
