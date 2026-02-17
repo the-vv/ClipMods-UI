@@ -38,7 +38,7 @@
                 </div>
               </div>
             }
-            <textarea class="w-full h-full min-w-0 rounded-2xl border border-primary/20 grow"
+            <textarea class="w-full h-full min-w-0 rounded-2xl border border-primary/20"
             placeholder="Result will be shown here" readonly [value]="result()"></textarea>
           </div>
         </p-fieldset>
@@ -103,7 +103,7 @@
   [dismissableMask]="true" [style]="{ width: '90vw', height: '80vh' }">
   <div class="w-full h-full flex flex-col gap-4">
     <textarea class="w-full h-full min-w-0 rounded-2xl border border-primary/20 resize-none"
-      [(ngModel)]="editableResult" 
+      [ngModel]="editableResult()" (ngModelChange)="editableResult.set($event)"
       placeholder="Edit your result here"></textarea>
   </div>
   <div class="flex justify-end gap-2 mt-4">

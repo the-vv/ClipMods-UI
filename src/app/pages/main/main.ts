@@ -153,16 +153,12 @@ export class Main {
 
   formatJson() {
     const resultText = this.result();
+    // Button only appears when result is valid JSON, but validate defensively
     if (this.isValidJson(resultText)) {
-      try {
-        const parsed = JSON.parse(resultText);
-        const formatted = JSON.stringify(parsed, null, 2);
-        this.result.set(formatted);
-        Toaster.showSuccess('JSON formatted successfully');
-      } catch (err) {
-        console.error('Failed to format JSON:', err);
-        Toaster.showError('Failed to format JSON');
-      }
+      const parsed = JSON.parse(resultText);
+      const formatted = JSON.stringify(parsed, null, 2);
+      this.result.set(formatted);
+      Toaster.showSuccess('JSON formatted successfully');
     }
   }
 
