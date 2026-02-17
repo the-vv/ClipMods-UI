@@ -23,21 +23,7 @@
       <div class="rounded-2xl grow min-h-0 w-1/2 min-w-0">
         <p-fieldset legend="Result" styleClass="main-bg-color -mt-5 rounded-2xl h-full w-full min-w-0 min-h-0"
           class="h-full block">
-          <div class="size-full flex flex-col gap-2">
-            @if (result()) {
-              <div class="flex gap-2 justify-end">
-                @if (isValidJson(result())) {
-                  <div tooltipPosition="top" pTooltip="Format JSON" showDelay="500">
-                    <p-button variant="outlined" icon="pi pi-align-justify" size="small" 
-                      (onClick)="formatJson()" aria-label="Format JSON" />
-                  </div>
-                }
-                <div tooltipPosition="top" pTooltip="Edit Result" showDelay="500">
-                  <p-button variant="outlined" icon="pi pi-pencil" size="small" 
-                    (onClick)="openEditResultDialog()" aria-label="Edit Result" />
-                </div>
-              </div>
-            }
+          <div class="size-full">
             <textarea class="w-full h-full min-w-0 rounded-2xl border border-primary/20"
             placeholder="Result will be shown here" readonly [value]="result()"></textarea>
           </div>
@@ -65,9 +51,21 @@
             }
           </div>
           @if (result()) {
-            <div class="shrink-0" tooltipPosition="top" pTooltip="Copy Result" showDelay="500">
-              <p-button variant="outlined" icon="pi pi-copy" aria-label="Save"
-                (onClick)="copyResultToClipboard()"/>
+            <div class="shrink-0 flex gap-2">
+              @if (isValidJson(result())) {
+                <div tooltipPosition="top" pTooltip="Format JSON" showDelay="500">
+                  <p-button variant="outlined" icon="pi pi-align-justify" size="small" 
+                    (onClick)="formatJson()" aria-label="Format JSON" />
+                </div>
+              }
+              <div tooltipPosition="top" pTooltip="Edit Result" showDelay="500">
+                <p-button variant="outlined" icon="pi pi-pencil" size="small" 
+                  (onClick)="openEditResultDialog()" aria-label="Edit Result" />
+              </div>
+              <div tooltipPosition="top" pTooltip="Copy Result" showDelay="500">
+                <p-button variant="outlined" icon="pi pi-copy" size="small" aria-label="Copy Result"
+                  (onClick)="copyResultToClipboard()"/>
+              </div>
             </div>
           }
         </div>
