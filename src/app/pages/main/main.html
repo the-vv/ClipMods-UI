@@ -99,11 +99,11 @@
   </div>
 </p-dialog>
 
-<p-dialog header="Edit Result" [modal]="true" [(visible)]="editResultDialogConfig().visible" [closable]="true"
+<p-dialog header="Edit Result" [modal]="true" [(visible)]="editResultDialogVisible" [closable]="true"
   [dismissableMask]="true" [style]="{ width: '90vw', height: '80vh' }">
   <div class="w-full h-full flex flex-col gap-4">
     <textarea class="w-full h-full min-w-0 rounded-2xl border border-primary/20 resize-none"
-      [(ngModel)]="editResultDialogConfig().editableResult" 
+      [(ngModel)]="editableResult" 
       placeholder="Edit your result here"></textarea>
   </div>
   <div class="flex justify-end gap-2 mt-4">
@@ -112,4 +112,4 @@
   </div>
 </p-dialog>
 
-<!-- a p-sidebar just with monaco editor for previewing a selcted code -->
+<!-- a p-sidebar just with monaco editor for previewing a selected code -->

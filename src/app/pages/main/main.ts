@@ -44,10 +44,8 @@ export class Main {
     visible: false,
     error: ''
   })
-  editResultDialogConfig = signal({
-    visible: false,
-    editableResult: ''
-  })
+  editResultDialogVisible = signal(false);
+  editableResult = signal('');
   modRunOptions: ModRunOptions = globalModRunOptions;
   inputArgs = signal<string[]>(['']);
   result = signal<string>('');
@@ -169,21 +167,16 @@ export class Main {
   }
 
   openEditResultDialog() {
-    this.editResultDialogConfig.set({
-      visible: true,
-      editableResult: this.result()
-    });
+    this.editableResult.set(this.result());
+    this.editResultDialogVisible.set(true);
   }
 
   closeEditResultDialog() {
-    this.editResultDialogConfig.set({
-      ...this.editResultDialogConfig(),
-      visible: false
-    });
+    this.editResultDialogVisible.set(false);
   }
 
   copyEditedResult() {
-    const editedText = this.editResultDialogConfig().editableResult;
+    const editedText = this.editableResult();
     navigator.clipboard.writeText(editedText).then(() => {
       Toaster.showSuccess('Edited result copied to clipboard');
     }).catch(err => {
