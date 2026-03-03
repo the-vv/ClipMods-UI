@@ -44,6 +44,8 @@ export class Main {
     visible: false,
     error: ''
   })
+  editResultDialogVisible = signal(false);
+  editableResult = signal('');
   modRunOptions: ModRunOptions = globalModRunOptions;
   inputArgs = signal<string[]>(['']);
   result = signal<string>('');
@@ -134,6 +136,48 @@ export class Main {
     }).catch(err => {
       console.error('Failed to copy result:', err);
       Toaster.showError('Failed to copy result to clipboard');
+    });
+  }
+
+  isValidJson(str: string): boolean {
+    if (!str || str.trim() === '') {
+      return false;
+    }
+    try {
+      JSON.parse(str);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  formatJson() {
+    const resultText = this.result();
+    // Button only appears when result is valid JSON, but validate defensively
+    if (this.isValidJson(resultText)) {
+      const parsed = JSON.parse(resultText);
+      const formatted = JSON.stringify(parsed, null, 2);
+      this.result.set(formatted);
+      Toaster.showSuccess('JSON formatted successfully');
+    }
+  }
+
+  openEditResultDialog() {
+    this.editableResult.set(this.result());
+    this.editResultDialogVisible.set(true);
+  }
+
+  closeEditResultDialog() {
+    this.editResultDialogVisible.set(false);
+  }
+
+  copyEditedResult() {
+    const editedText = this.editableResult();
+    navigator.clipboard.writeText(editedText).then(() => {
+      Toaster.showSuccess('Edited result copied to clipboard');
+    }).catch(err => {
+      console.error('Failed to copy edited result:', err);
+      Toaster.showError('Failed to copy edited result to clipboard');
     });
   }
 }
